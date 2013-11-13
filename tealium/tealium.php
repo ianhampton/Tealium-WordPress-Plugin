@@ -3,7 +3,7 @@
 Plugin Name: Tealium
 Plugin URI: http://tealium.com
 Description: Adds the Tealium tag and creates a data layer from post data.
-Version: 0.1
+Version: 0.2
 Author: Ian Hampton
 Author URI: http://ianhampton.net
 */
@@ -30,10 +30,6 @@ function options_page_tealium() {
 	include plugin_dir_path( __FILE__ ).'tealium.options.php';
 }
 
-function insert_tealium( $tealiumTagCode ) {
-	echo $tealiumTagCode;
-}
-
 function dataLayer() {
 	$utagdata = array();
 
@@ -42,6 +38,8 @@ function dataLayer() {
 	$utagdata['siteDescription'] = get_bloginfo( 'description' );
 
 	if ( ( is_single() ) || is_page() ) {
+		global $post;
+
 		// Get categories
 		$categories = get_the_category();
 		$catout = array();
@@ -61,8 +59,6 @@ function dataLayer() {
 			}
 			$utagdata['postTags'] = $tagout;
 		}
-
-		global $post;
 
 		// Misc post/page data
 		$utagdata['pageType'] = get_post_type();
@@ -87,6 +83,7 @@ function dataLayer() {
 			$utagdata['searchQuery'] = get_search_query();
 		}
 
+	// Encode data object
 	$jsondata = json_encode( $utagdata );
 
 	// Output data layer
@@ -97,12 +94,20 @@ function dataLayer() {
 	}
 }
 
+function outputFilter( $template ) {
+	ob_start();
+	return $template;
+}
+
 function tealiumTag() {
 	$tealiumTagCode = get_option( 'tealiumTagCode' );
 	if ( !empty( $tealiumTagCode ) ) {
-		insert_tealium( $tealiumTagCode );
-	}
+		$content = ob_get_clean();
 
+		// Insert Tealium tag after body tag (sadly there is no wp_body hook)
+		$content = preg_replace( '#<body([^>]*)>#i', "<body$1>\n\n\t{$tealiumTagCode}", $content );
+		echo $content;
+	}
 }
 
 if ( is_admin() ) {
@@ -113,5 +118,7 @@ if ( is_admin() ) {
 }
 
 add_action( 'wp_head', 'dataLayer' );
-add_action( 'wp_footer', 'tealiumTag' );
+add_filter( 'template_include', 'outputFilter', 1 );
+add_filter( 'shutdown', 'tealiumTag', 0 );
+
 ?>
