@@ -10,10 +10,12 @@ Author URI: http://ianhampton.net
 
 function activate_tealium() {
 	add_option('tealiumTag', '');
+	add_option('tealiumTagCode', '');
 }
 
 function deactive_tealium() {
 	delete_option('tealiumTagCode');
+	delete_option('tealiumTag');
 }
 
 function admin_init_tealium() {
@@ -25,7 +27,7 @@ function admin_menu_tealium() {
 }
 
 function options_page_tealium() {
-	include(plugin_dir_path(__FILE__).'tealium.options.php');  
+	include(plugin_dir_path(__FILE__).'tealium.options.php');	 
 }
 
 function insert_tealium($tealiumTagCode) {
@@ -90,9 +92,9 @@ function dataLayer() {
 	
 	// Output data layer
 	if (json_decode($jsondata) !== null) {
-		echo "<script type=\"text/javascript\">	
+		echo "<script type=\"text/javascript\"> 
 				var utag_data = {$jsondata}; 
-			  </script>";
+				</script>";
 	}
 }
 
@@ -101,15 +103,15 @@ function tealiumTag() {
 	if (!empty($tealiumTagCode)) {
 		insert_tealium($tealiumTagCode);
 	}
-      
+			
 }
 
 function wordCount() {
-    ob_start();
-    the_content();
-    $content = ob_get_clean();
-    return sizeof(explode(" ", $content));
-}  
+	ob_start();
+	the_content();
+	$content = ob_get_clean();
+	return sizeof(explode(" ", $content));
+}	 
 
 if (is_admin()) {
 	register_activation_hook(__FILE__, 'activate_tealium');
