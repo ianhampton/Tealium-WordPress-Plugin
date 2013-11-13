@@ -30,6 +30,19 @@ function options_page_tealium() {
 	include plugin_dir_path( __FILE__ ).'tealium.options.php';
 }
 
+function admin_notices_tealium() {
+	global $pagenow;
+	$tealiumTagCode = get_option( 'tealiumTagCode' );
+	if ( ( $pagenow == 'plugins.php' ) && ( empty( $tealiumTagCode ) ) ) {
+		$html = '<div class="updated">';
+		$html .= '<p>';
+		$html .= 'Please enter your Tealium tag code <a href="admin.php?page=tealium">over here</a>.';
+		$html .= '</p>';
+		$html .= '</div>';
+		echo $html;
+	}
+}
+
 function dataLayer() {
 	$utagdata = array();
 
@@ -115,6 +128,7 @@ if ( is_admin() ) {
 	register_deactivation_hook( __FILE__, 'deactive_tealium' );
 	add_action( 'admin_init', 'admin_init_tealium' );
 	add_action( 'admin_menu', 'admin_menu_tealium' );
+	add_action( 'admin_notices', 'admin_notices_tealium' );
 }
 
 add_action( 'wp_head', 'dataLayer' );
