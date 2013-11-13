@@ -62,13 +62,12 @@ function dataLayer() {
 			$utagdata['postTags'] = $tagout;
 		}
 
-		// Get word count
-		$utagdata['wordCount'] = wordCount();
+		global $post;
 
 		// Misc post/page data
 		$utagdata['pageType'] = get_post_type();
 		$utagdata['postTitle'] = get_the_title();
-		$utagdata['postAuthor'] = get_the_author();
+		$utagdata['postAuthor'] = get_userdata( $post->post_author )->display_name;
 		$utagdata['postDate'] = get_the_time( 'Y/m/d' );
 
 		// Get and merge post meta data
@@ -104,13 +103,6 @@ function tealiumTag() {
 		insert_tealium( $tealiumTagCode );
 	}
 
-}
-
-function wordCount() {
-	ob_start();
-	the_content();
-	$content = ob_get_clean();
-	return sizeof( explode( " ", $content ) );
 }
 
 if ( is_admin() ) {
