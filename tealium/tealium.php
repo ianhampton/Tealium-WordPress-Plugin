@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tealium
 Plugin URI: http://tealium.com
-Description: Adds the Tealium tag and creates a data layer from post data.
+Description: Adds the Tealium tag and creates a data object from post data.
 Version: 0.2
 Author: Ian Hampton
 Author URI: http://ianhampton.net
@@ -43,7 +43,7 @@ function admin_notices_tealium() {
 	}
 }
 
-function dataLayer() {
+function dataObject() {
 	$utagdata = array();
 
 	// Blog info
@@ -99,7 +99,7 @@ function dataLayer() {
 	// Encode data object
 	$jsondata = json_encode( $utagdata );
 
-	// Output data layer
+	// Output data object
 	if ( json_decode( $jsondata ) !== null ) {
 		echo "<script type=\"text/javascript\">
 				var utag_data = {$jsondata};
@@ -131,7 +131,7 @@ if ( is_admin() ) {
 	add_action( 'admin_notices', 'admin_notices_tealium' );
 }
 
-add_action( 'wp_head', 'dataLayer' );
+add_action( 'wp_head', 'dataObject' );
 add_filter( 'template_include', 'outputFilter', 1 );
 add_filter( 'shutdown', 'tealiumTag', 0 );
 
