@@ -3,9 +3,9 @@
 Plugin Name: Tealium
 Plugin URI: http://tealium.com
 Description: Adds the Tealium tag and creates a data object from post data.
-Version: 1.0
-Author: Ian Hampton
-Author URI: http://ianhampton.net
+Version: 1.1
+Author: Ian Hampton - Tealium EMEA
+Author URI: http://tealium.com
 */
 
 function activate_tealium() {
@@ -23,7 +23,7 @@ function admin_init_tealium() {
 }
 
 function admin_menu_tealium() {
-	add_options_page( 'Tealium Tag Settings', 'Tealium Tag Settings', 8, 'tealium', 'options_page_tealium' );
+	add_options_page( 'Tealium Tag Settings', 'Tealium Tag Settings', 'manage_options' , 'tealium', 'options_page_tealium' );
 }
 
 function options_page_tealium() {
