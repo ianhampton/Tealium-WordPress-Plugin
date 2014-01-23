@@ -41,6 +41,7 @@ To install:
 * Copy to your wp-content/plugins folder.
 * Enable through the plugins section within Wordpress.
 * Paste your Tealium code into 'Tealium Tag Settings' under Settings in Wordpress.
+* Optional - If there are items you wish to exclude from your data layer, add the keys as a comma separated list.
 
 == Frequently Asked Questions ==
 
@@ -61,6 +62,10 @@ To install:
 
 == Changelog ==
 
+= 1.2 =
+* Added a ability to exclude keys from data layer.
+* The JSON object will now be pretty-printed where PHP support allows.
+
 = 1.1 =
 * Migrate from capabilities to roles.
 
@@ -69,8 +74,11 @@ To install:
 
 == Upgrade Notice ==
 
+= 1.2 =
+Upgrade to enable data layer exclusions.
+
 = 1.1 =
-* Migrate from capabilities to roles.
+Migrate from capabilities to roles. Upgrade recommended.
 
 = 1.0 =
 Initial release.

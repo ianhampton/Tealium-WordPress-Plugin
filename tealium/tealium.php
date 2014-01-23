@@ -3,7 +3,7 @@
 Plugin Name: Tealium
 Plugin URI: http://tealium.com
 Description: Adds the Tealium tag and creates a data object from post data.
-Version: 1.1
+Version: 1.2
 Author: Ian Hampton - Tealium EMEA
 Author URI: http://tealium.com
 */
@@ -11,15 +11,18 @@ Author URI: http://tealium.com
 function activate_tealium() {
 	add_option( 'tealiumTag', '' );
 	add_option( 'tealiumTagCode', '' );
+	add_option( 'tealiumExclusions', '' );
 }
 
 function deactive_tealium() {
 	delete_option( 'tealiumTagCode' );
+	delete_option( 'tealiumExclusions' );
 	delete_option( 'tealiumTag' );
 }
 
 function admin_init_tealium() {
 	register_setting( 'tealiumTag', 'tealiumTagCode' );
+	register_setting( 'tealiumTag', 'tealiumExclusions' );
 }
 
 function admin_menu_tealium() {
@@ -96,14 +99,22 @@ function dataObject() {
 			$utagdata['searchQuery'] = get_search_query();
 		}
 
+	// Remove excluded keys
+	$utagdata = removeExclusions( $utagdata );
+
+
 	// Encode data object
-	$jsondata = json_encode( $utagdata );
+	if ( version_compare( phpversion(), '5.4.0', '>=' ) ) {
+		// Pretty print JSON if PHP version supports it
+		$jsondata = json_encode( $utagdata, JSON_PRETTY_PRINT );
+	}
+	else {
+		$jsondata = json_encode( $utagdata );
+	}
 
 	// Output data object
 	if ( json_decode( $jsondata ) !== null ) {
-		echo "<script type=\"text/javascript\">
-				var utag_data = {$jsondata};
-			  </script>";
+		echo "<script type=\"text/javascript\">\nvar utag_data = {$jsondata};\n</script>\n";
 	}
 }
 
@@ -121,6 +132,23 @@ function tealiumTag() {
 		$content = preg_replace( '#<body([^>]*)>#i', "<body$1>\n\n\t{$tealiumTagCode}", $content );
 		echo $content;
 	}
+}
+
+function removeExclusions( $utagdata ) {
+	$exclusions = get_option( 'tealiumExclusions' );
+	if ( !empty( $exclusions ) ) {
+
+		// Convert list to array and trim whitespace
+		$exclusions = array_map( 'trim', explode( ',', $exclusions ) );
+
+		foreach ( $exclusions as $exclusion ) {
+			if ( array_key_exists( $exclusion, $utagdata ) ) {
+				// Remove from utag data array
+				unset( $utagdata[$exclusion] );
+			}
+		}
+	}
+	return $utagdata;
 }
 
 if ( is_admin() ) {
