@@ -63,7 +63,7 @@ To install:
 == Changelog ==
 
 = 1.2 =
-* Added a ability to exclude keys from data layer.
+* Added the ability to exclude keys from the data layer.
 * The JSON object will now be pretty-printed where PHP support allows.
 
 = 1.1 =
