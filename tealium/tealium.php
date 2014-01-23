@@ -114,7 +114,7 @@ function dataObject() {
 
 	// Output data object
 	if ( json_decode( $jsondata ) !== null ) {
-		echo "<script type=\"text/javascript\">\nvar utag_data = {$jsondata};\n</script>\n";
+		echo "\n<script type=\"text/javascript\">\nvar utag_data = {$jsondata};\n</script>\n";
 	}
 }
 
