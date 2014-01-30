@@ -84,7 +84,6 @@ Version 1.3 adds basic support for cart contents information in the data layer.
 == Changelog ==
 
 = 1.3 =
-
 * Tag location is now configurable.
 * Basic support for WooCommerce cart data.
 * Plugin refactored to support translations.
