@@ -3,12 +3,12 @@ Contributors: tealium
 Tags: analytics, tealium, data layer
 Donate link: http://tealium.com
 Requires at least: 3.0.1
-Tested up to: 3.8
-Stable tag: 1.2
+Tested up to: 3.8.1
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Adds the Tealium tag and creates a data object from post data.
+Adds the Tealium tag and creates a data layer for your Wordpress site.
 
 == Description ==
 
@@ -16,7 +16,7 @@ Adds the Tealium tag and creates a data object from post data.
 
 Allows users to easily add the Tealium tag without editing any template files. 
 
-A data object is created containing:
+A data layer is added to your Wordpress website containing:
 
 * Site name
 * Site description
@@ -40,8 +40,13 @@ To install:
 
 * Copy to your wp-content/plugins folder.
 * Enable through the plugins section within Wordpress.
-* Paste your Tealium code into 'Tealium Tag Settings' under Settings in Wordpress.
-* Optional - If there are items you wish to exclude from your data layer, add the keys as a comma separated list.
+* Paste your Tealium code into 'Tealium Settings' under Settings in Wordpress and save.
+* That's it!
+
+Optional steps:
+
+* The position of the Tealium tag can be selected.
+* If there are items you wish to exclude from your data layer, add the keys as a comma separated list.
 
 == Frequently Asked Questions ==
 
@@ -55,12 +60,34 @@ To install:
 * All post meta data, including custom fields
 * Search terms
 
+= What are the Tealium tag location options? =
+
+* After opening body tag (recommended)
+* Header - Before closing head tag
+* Footer - Before closing body tag
+
+= Is WooCommerce supported? =
+
+WooCommerce stores product information as meta data, so by default your data layer will be rich with data on product pages.
+
+Version 1.3 adds basic support for cart contents information in the data layer.
 
 == Screenshots ==
 
-1. Tag settings.
+1. The Tealium plugin allows your Tealium tag to be added straight to your site from your Wordpress dashboard.
+2. A data layer is added to your site containing basic post or page data.
+3. The plugin also takes categories and tags...
+4. ...and rolls them into the data layer.
+5. Custom fields and other meta data is also supported.
+6. Many existing Wordpress plugins make use of meta data, so your data layer should be rich with potential data sources.
 
 == Changelog ==
+
+= 1.3 =
+
+* Tag location is now configurable.
+* Basic support for WooCommerce cart data.
+* Plugin refactored to support translations.
 
 = 1.2 =
 * Added the ability to exclude keys from the data layer.
@@ -73,6 +100,9 @@ To install:
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.3 =
+New features include configurable tag location and WooCommerce support.
 
 = 1.2 =
 Upgrade to enable data layer exclusions.
