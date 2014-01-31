@@ -113,24 +113,34 @@ function dataObject() {
 
 		// Get cart details
 		$woocart = (array) $woocommerce->cart;
-
 		$productData = array();
 		
-		// Get cart product IDs, SKUs, Titles etc.
-		foreach ( $woocart['cart_contents'] as $cartItem ) {
-			$productMeta = new WC_Product( $cartItem['product_id'] );
-			$productData['product_id'][] = $cartItem['product_id'];
-			$productData['product_sku'][] = $productMeta->post->sku;
-			$productData['product_name'][] = $productMeta->post->post->post_title;
+		if (!empty($woocart['cart_contents'])) {
+			
+			// Get cart product IDs, SKUs, Titles etc.
+			foreach ( $woocart['cart_contents'] as $cartItem ) {
+				$productMeta = new WC_Product( $cartItem['product_id'] );
+				
+				$productData['product_id'][] = $cartItem['product_id'];
+				$productData['product_sku'][] = $productMeta->post->sku;
+				$productData['product_name'][] = $productMeta->post->post->post_title;
+				$productData['product_quantity'][] = $cartItem['quantity'];
+				$productData['product_regular_price'][] = get_post_meta( $cartItem['product_id'], '_regular_price', true);
+				$productData['product_sale_price'][] = get_post_meta( $cartItem['product_id'], '_sale_price', true);
+				$productData['product_type'][] = $productMeta->post->product_type;
+			}
 		}
 
 		// Remove the extensive individual product details
 		unset( $woocart['cart_contents'] );
 		unset( $woocart['tax'] );
-
+		
+		// Get currency in use
+		$woocart['site_currency'] = get_woocommerce_currency();
+		
+		// Merge shop and cart details into utagdata
 		$utagdata = array_merge( $utagdata, $woocart );
 		$utagdata = array_merge( $utagdata, $productData );
-
 	}
 
 	// Encode data object
