@@ -114,12 +114,14 @@ function dataObject() {
 		// Get cart details
 		$woocart = (array) $woocommerce->cart;
 
-		// Get cart product IDs, SKUs, Titles
+		$productData = array();
+		
+		// Get cart product IDs, SKUs, Titles etc.
 		foreach ( $woocart['cart_contents'] as $cartItem ) {
 			$productMeta = new WC_Product( $cartItem['product_id'] );
-			$productData['cartProductIDs'][] = $cartItem['product_id'];
-			$productData['cartProductSKUs'][] = $productMeta->post->sku;
-			$productData['cartProductTitles'][] = $productMeta->post->post->post_title;
+			$productData['product_id'][] = $cartItem['product_id'];
+			$productData['product_sku'][] = $productMeta->post->sku;
+			$productData['product_name'][] = $productMeta->post->post->post_title;
 		}
 
 		// Remove the extensive individual product details

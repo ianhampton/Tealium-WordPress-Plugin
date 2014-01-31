@@ -1,6 +1,6 @@
 === Plugin Name ===
 Contributors: tealium
-Tags: analytics, tealium, data layer
+Tags: analytics, tealium, data object, data layer
 Donate link: http://tealium.com
 Requires at least: 3.0.1
 Tested up to: 3.8.1
@@ -8,7 +8,7 @@ Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Adds the Tealium tag and creates a data layer for your Wordpress site.
+Adds the Tealium tag and creates a data layer/object for your Wordpress site.
 
 == Description ==
 
@@ -16,7 +16,7 @@ Adds the Tealium tag and creates a data layer for your Wordpress site.
 
 Allows users to easily add the Tealium tag without editing any template files. 
 
-A data layer is added to your Wordpress website containing:
+A data object is added to your Wordpress website containing:
 
 * Site name
 * Site description
@@ -46,11 +46,11 @@ To install:
 Optional steps:
 
 * The position of the Tealium tag can be selected.
-* If there are items you wish to exclude from your data layer, add the keys as a comma separated list.
+* If there are items you wish to exclude from your data object, add the keys as a comma separated list.
 
 == Frequently Asked Questions ==
 
-= What data is currently included in the data layer? =
+= What data is currently included in the data object? =
 
 * Site name
 * Site description
@@ -68,18 +68,18 @@ Optional steps:
 
 = Is WooCommerce supported? =
 
-WooCommerce stores product information as meta data, so by default your data layer will be rich with data on product pages.
+WooCommerce stores product information as meta data, so by default your data object will be rich with data on product pages.
 
-Version 1.3 adds basic support for cart contents information in the data layer.
+Version 1.3 adds basic support for cart contents information in the data object.
 
 == Screenshots ==
 
 1. The Tealium plugin allows your Tealium tag to be added straight to your site from your Wordpress dashboard.
-2. A data layer is added to your site containing basic post or page data.
+2. A data object is added to your site containing basic post or page data.
 3. The plugin also takes categories and tags...
-4. ...and rolls them into the data layer.
+4. ...and rolls them into the data object.
 5. Custom fields and other meta data is also supported.
-6. Many existing Wordpress plugins make use of meta data, so your data layer should be rich with potential data sources.
+6. Many existing Wordpress plugins make use of meta data, so your data object should be rich with potential data sources.
 
 == Changelog ==
 
@@ -89,7 +89,7 @@ Version 1.3 adds basic support for cart contents information in the data layer.
 * Plugin refactored to support translations.
 
 = 1.2 =
-* Added the ability to exclude keys from the data layer.
+* Added the ability to exclude keys from the data object.
 * The JSON object will now be pretty-printed where PHP support allows.
 
 = 1.1 =
@@ -104,7 +104,7 @@ Version 1.3 adds basic support for cart contents information in the data layer.
 New features include configurable tag location and WooCommerce support.
 
 = 1.2 =
-Upgrade to enable data layer exclusions.
+Upgrade to enable data object exclusions.
 
 = 1.1 =
 Migrate from capabilities to roles. Upgrade recommended.
