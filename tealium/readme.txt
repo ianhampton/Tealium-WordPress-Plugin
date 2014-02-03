@@ -4,7 +4,7 @@ Tags: analytics, tealium, data object, data layer
 Donate link: http://tealium.com
 Requires at least: 3.0.1
 Tested up to: 3.8.1
-Stable tag: 1.3
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -83,6 +83,9 @@ Version 1.3 adds basic support for cart contents information in the data object.
 
 == Changelog ==
 
+= 1.4 =
+* Exclusions bug fix.
+
 = 1.3 =
 * Tag location is now configurable.
 * Basic support for WooCommerce cart data.
@@ -99,6 +102,9 @@ Version 1.3 adds basic support for cart contents information in the data object.
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.4 =
+Exclusions bug fix, upgrade advised.
 
 = 1.3 =
 New features include configurable tag location and WooCommerce support.

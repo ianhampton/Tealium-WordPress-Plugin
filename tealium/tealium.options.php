@@ -44,7 +44,7 @@ function select( $id, $options, $multiple = false ) {
 		<p>
 			<?php _e( 'Keys to exclude from data object:', 'tealium' ); ?>
 			<br />
-			<input name='tealiumExclusions' size='50' type='text' value='<?php //echo get_option( 'tealiumExclusions' ); ?>' />
+			<input name='tealiumExclusions' size='50' type='text' value='<?php echo get_option( 'tealiumExclusions' ); ?>' />
 			<br />
 			<small><?php _e( 'Comma separated list - <i>postDate, custom_field_1</i>', 'tealium' ); ?></small>
 		</p>
