@@ -22,7 +22,7 @@ For example:
 
 ```php
 /*
- * Dynamically add data to Tealium data object
+ * Dynamically add data to the Tealium data object
  */
 function addToDataObject() {
 	global $utagdata;
