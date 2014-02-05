@@ -22,7 +22,7 @@ For example:
 
 ```php
 /*
- * Add data to Tealium data object programatically
+ * Dynamically add data to Tealium data object
  */
 function addToDataObject() {
 	global $utagdata;
@@ -40,6 +40,7 @@ add_action( 'tealium_addToDataObject', 'addToDataObject' );
  */
 function switchEnvironment() {
 	global $tealiumtag;
+	
 	if ( get_site_url() == 'http://dev.mywebsite.com' ) {
 		$tealiumtag = str_replace( '/prod/', '/dev/', $tealiumtag );
 	}
