@@ -16,7 +16,7 @@ Optional steps:
 Action examples
 ---------------
 
-There are a couple of actions that can be used to manipulate the Tealium tag or UDO in your themes functions.php file or within your own plugin.
+There are a couple of actions that can be used to manipulate the Tealium tag or data object in your themes functions.php file or within your own plugin.
 
 For example:
 
