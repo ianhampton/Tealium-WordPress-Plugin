@@ -25,6 +25,7 @@ A data object is added to your Wordpress website containing:
 * Post tags
 * All post meta data, including custom fields
 * Search terms
+* Number of search results
 
 
 = About Tealium =
@@ -38,7 +39,7 @@ Tags – commonly known as tracking pixels – are becoming the data collection 
 
 To install:
 
-* Copy to your wp-content/plugins folder.
+* Install from the Wordpress plugin repository, or copy to your wp-content/plugins folder.
 * Enable through the plugins section within Wordpress.
 * Paste your Tealium code into 'Tealium Settings' under Settings in Wordpress and save.
 * That's it!
@@ -59,6 +60,7 @@ Optional steps:
 * Post tags
 * All post meta data, including custom fields
 * Search terms
+* Number of search results
 
 = What are the Tealium tag location options? =
 
@@ -72,6 +74,18 @@ WooCommerce stores product information as meta data, so by default your data obj
 
 Version 1.3 adds basic support for cart contents information in the data object.
 
+= Can I add to the data layer dynamically using PHP code? =
+
+This can be achieved calling the 'tealium_addToDataObject' action from your themes functions.php file or a separate plugin.
+
+For more information see the [action examples on GitHub](https://github.com/ianhampton/Tealium-Wordpress-Plugin#action-examples).
+
+= Can I automatically switch between Tealium environments on my dev/live website? =
+
+This can be achieved by conditionally modifying the Tealium tag code by calling the 'tealium_tagCode' action from your themes functions.php file or a separate plugin.
+
+For more information see the [action examples on GitHub](https://github.com/ianhampton/Tealium-Wordpress-Plugin#action-examples).
+
 == Screenshots ==
 
 1. The Tealium plugin allows your Tealium tag to be added straight to your site from your Wordpress dashboard.
@@ -82,6 +96,10 @@ Version 1.3 adds basic support for cart contents information in the data object.
 6. Many existing Wordpress plugins make use of meta data, so your data object should be rich with potential data sources.
 
 == Changelog ==
+
+= 1.5 =
+* Added search result count to data object.
+* Added actions to allow the data object and Tealium tag to be modified by theme/plugin developers.
 
 = 1.4 =
 * Exclusions bug fix.
@@ -102,6 +120,9 @@ Version 1.3 adds basic support for cart contents information in the data object.
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.5 =
+Upgrade to add search result count to data layer. Also allows the data object and Tealium tag to be modified by theme/plugin developers.
 
 = 1.4 =
 Exclusions bug fix, upgrade advised.
