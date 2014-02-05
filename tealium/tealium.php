@@ -170,8 +170,16 @@ function dataObject() {
 			$utagdata['pageType'] = "homepage";
 		}
 	else if ( is_search() ) {
+			// Collect search and result data
+			$searchQuery = get_search_query();
+			$searchResults = &new WP_Query('s='.str_replace(' ', '+', $searchQuery.'&showposts=-1'));
+			$searchCount = $searchResults->post_count;
+			wp_reset_query();
+			
+			// Add to udo
 			$utagdata['pageType'] = "search";
-			$utagdata['searchQuery'] = get_search_query();
+			$utagdata['searchQuery'] = $searchQuery;
+			$utagdata['searchResults'] = $searchCount;
 		}
 
 	// Add shop data if WooCommerce is installed
@@ -270,7 +278,7 @@ function insertTealiumTag() {
 		case '0':
 		default:
 			// Location - After opening body tag
-			// Start content filter
+			// Start content buffer
 			add_filter( 'template_include', 'outputFilter', 1 );
 			// Inject Tealium tag, output page contents
 			add_filter( 'shutdown', 'tealiumTagBody', 0 );
