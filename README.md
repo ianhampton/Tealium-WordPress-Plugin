@@ -27,7 +27,7 @@ For example:
 function addToDataObject() {
 	global $utagdata;
 	
-	// Add the current php version to the data layer
+	// Add the current PHP version to the data layer
 	$utagdata['php_version'] = phpversion();
 	
 	// Add a timestamp to the data layer
