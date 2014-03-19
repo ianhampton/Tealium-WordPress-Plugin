@@ -3,13 +3,22 @@
 Plugin Name: Tealium
 Plugin URI: http://tealium.com
 Description: Adds the Tealium tag and creates a data layer for your Wordpress site.
-Version: 1.4.1
+Version: 1.5
 Author: Ian Hampton - Tealium EMEA
 Author URI: http://tealium.com
 Text Domain: tealium
 */
 
 function activate_tealium() {
+	
+	// Only set data style to underscore for fresh installations
+	if( !get_option( 'tealiumTag' ) ) {
+		update_option( 'tealiumDataStyle', '1' );
+	}
+	else {
+		add_option( 'tealiumDataStyle', '' );
+	}
+	
 	add_option( 'tealiumTag', '' );
 	add_option( 'tealiumTagCode', '' );
 	add_option( 'tealiumTagLocation', '' );
@@ -18,6 +27,7 @@ function activate_tealium() {
 
 function deactive_tealium() {
 	delete_option( 'tealiumExclusions' );
+	delete_option( 'tealiumDataStyle', '' );
 	delete_option( 'tealiumTagLocation' );
 	delete_option( 'tealiumTagCode' );
 	delete_option( 'tealiumTag' );
@@ -26,6 +36,7 @@ function deactive_tealium() {
 function admin_init_tealium() {
 	register_setting( 'tealiumTag', 'tealiumTagCode' );
 	register_setting( 'tealiumTag', 'tealiumTagLocation' );
+	register_setting( 'tealiumTag', 'tealiumDataStyle' );
 	register_setting( 'tealiumTag', 'tealiumExclusions' );
 }
 
@@ -74,6 +85,27 @@ function removeExclusions( $utagdata ) {
 	return $utagdata;
 }
 add_filter( 'tealium_removeExclusions', 'removeExclusions' );
+
+
+/*
+ * Convert camel case to underscores
+ */
+function convertCamelCase($utagdata, $arrayHolder = array()) {
+	$underscoreArray = !empty($arrayHolder) ? $arrayHolder : array();
+	foreach ($utagdata as $key => $val) {
+		$newKey = preg_replace('/[A-Z]/', '_$0', $key);
+		$newKey = strtolower($newKey);
+		$newKey = ltrim($newKey, '_');
+		if (!is_array($val)) {
+			$underscoreArray[$newKey] = $val;
+		} else {
+			$underscoreArray[$newKey] = convertCamelCase($val, $underscoreArray[$newKey]);
+		}
+	}
+	return $underscoreArray;
+}
+add_filter( 'tealium_convertCamelCase', 'convertCamelCase' );
+
 
 /*
  * Adds WooCommerce data to data layer
@@ -191,6 +223,11 @@ function dataObject() {
 	if ( has_action( 'tealium_addToDataObject' ) ) {
 		do_action( 'tealium_addToDataObject' );
 	}
+	
+	if ( get_option( 'tealiumDataStyle' ) == '1' ) {
+		// Convert camel case to underscore
+		$utagdata = apply_filters( 'tealium_convertCamelCase', $utagdata );
+	}
 
 	// Remove excluded keys
 	$utagdata = apply_filters( 'tealium_removeExclusions', $utagdata );
@@ -259,6 +296,18 @@ function tealiumTagBody( $tealiumTagCode ) {
 }
 
 /*
+ * Used in combination with outputFilter() to add Tealium tag after <head>
+ */
+function tealiumTagHead( $tealiumTagCode ) {
+	$content = ob_get_clean();
+	$tealiumTagCode = getTealiumTagCode();
+
+	// Insert Tealium tag immediately after head tag
+	$content = preg_replace( '#<head([^>]*)>#i', "<head$1>\n\n\t{$tealiumTagCode}", $content );
+	echo $content;
+}
+
+/*
  * Determine where the Tealium tag should be located and insert it
  */
 function insertTealiumTag() {
@@ -274,6 +323,13 @@ function insertTealiumTag() {
 		case '2':
 			// Location - Footer
 			add_action( 'wp_footer', 'outputTealiumTagCode', 10000 );
+			break;
+		case '3':
+			// Location - Header (Top)
+			// Start content buffer
+			add_filter( 'template_include', 'outputFilter', 1 );
+			// Inject Tealium tag, output page contents
+			add_filter( 'shutdown', 'tealiumTagHead', 0 );
 			break;
 		case '0':
 		default:

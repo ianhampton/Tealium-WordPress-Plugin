@@ -14,6 +14,25 @@ function select( $id, $options, $multiple = false ) {
 	$output .= '</select>';
 	return $output;
 }
+
+function generateBulkDataSourceList() {
+	global $wpdb;
+	$metaKeys = $wpdb->get_results( "SELECT DISTINCT(meta_key) FROM {$wpdb->postmeta} ORDER BY meta_id DESC" );
+	
+	$string = ', "Data Layer", "Imported from Wordpress"&#13;&#10;';
+	if ( $metaKeys ) {
+		$output = '';
+		foreach ( $metaKeys as $metaKey ) {
+			$output .= $metaKey->meta_key . $string;
+		}	
+	}
+	
+	$output .= 'siteName'. $string;
+	$output .= 'siteDescription'. $string;
+	$output .= 'pageType'. $string;
+	return $output;
+}
+
 ?>
 
 <div class="wrap">
@@ -38,15 +57,28 @@ function select( $id, $options, $multiple = false ) {
 			$options[] = __( 'After opening body tag (recommended)', 'tealium' );
 			$options[] = __( 'Header - Before closing head tag', 'tealium' );
 			$options[] = __( 'Footer - Before closing body tag', 'tealium' );
+			$options[] = __( 'Immediately after opening head tag', 'tealium' );
 			echo select( 'tealiumTagLocation', $options );
 			?>
+		</p>
+		<p>
+			<?php _e( 'Data layer style:', 'tealium' ); ?>
+			<br />
+			<?php
+			$options = array();
+			$options[] = __( 'CamelCase (legacy)', 'tealium' );
+			$options[] = __( 'Underscore (recommended)', 'tealium' );
+			echo select( 'tealiumDataStyle', $options );
+			?>
+			<br />
+			<small><?php _e( 'For example CamelCase = <i>postDate, siteName</i>. Underscore = <i>post_date, site_name</i>.', 'tealium' ); ?></small>
 		</p>
 		<p>
 			<?php _e( 'Keys to exclude from data object:', 'tealium' ); ?>
 			<br />
 			<input name='tealiumExclusions' size='50' type='text' value='<?php echo get_option( 'tealiumExclusions' ); ?>' />
 			<br />
-			<small><?php _e( 'Comma separated list - <i>postDate, custom_field_1</i>', 'tealium' ); ?></small>
+			<small><?php _e( 'Comma separated list - <i>postDate, custom_field_1</i>.', 'tealium' ); ?></small>
 		</p>
 
 		<input type="hidden" name="action" value="update" />
@@ -54,4 +86,8 @@ function select( $id, $options, $multiple = false ) {
 		<p class="submit"><input type="submit" class="button-primary" value="<?php _e( 'Save Changes', 'tealium' ); ?>" /></p>
 
 	</form>
+	
+	<!-- Coming soon! -->
+	<!--<h2><?php _e( 'Data Source Bulk Export', 'tealium' ); ?></h2>
+	<textarea name="csvExport" rows="10" cols="100"><?php echo generateBulkDataSourceList() ?></textarea>-->
 </div>
