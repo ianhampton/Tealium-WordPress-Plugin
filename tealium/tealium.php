@@ -3,22 +3,22 @@
 Plugin Name: Tealium
 Plugin URI: http://tealium.com
 Description: Adds the Tealium tag and creates a data layer for your Wordpress site.
-Version: 1.5
+Version: 1.5.1
 Author: Ian Hampton - Tealium EMEA
 Author URI: http://tealium.com
 Text Domain: tealium
 */
 
 function activate_tealium() {
-	
+
 	// Only set data style to underscore for fresh installations
-	if( !get_option( 'tealiumTag' ) ) {
+	if ( !get_option( 'tealiumTag' ) ) {
 		update_option( 'tealiumDataStyle', '1' );
 	}
 	else {
 		add_option( 'tealiumDataStyle', '' );
 	}
-	
+
 	add_option( 'tealiumTag', '' );
 	add_option( 'tealiumTagCode', '' );
 	add_option( 'tealiumTagLocation', '' );
@@ -90,16 +90,16 @@ add_filter( 'tealium_removeExclusions', 'removeExclusions' );
 /*
  * Convert camel case to underscores
  */
-function convertCamelCase($utagdata, $arrayHolder = array()) {
-	$underscoreArray = !empty($arrayHolder) ? $arrayHolder : array();
-	foreach ($utagdata as $key => $val) {
-		$newKey = preg_replace('/[A-Z]/', '_$0', $key);
-		$newKey = strtolower($newKey);
-		$newKey = ltrim($newKey, '_');
-		if (!is_array($val)) {
+function convertCamelCase( $utagdata, $arrayHolder = array() ) {
+	$underscoreArray = !empty( $arrayHolder ) ? $arrayHolder : array();
+	foreach ( $utagdata as $key => $val ) {
+		$newKey = preg_replace( '/[A-Z]/', '_$0', $key );
+		$newKey = strtolower( $newKey );
+		$newKey = ltrim( $newKey, '_' );
+		if ( !is_array( $val ) ) {
 			$underscoreArray[$newKey] = $val;
 		} else {
-			$underscoreArray[$newKey] = convertCamelCase($val, $underscoreArray[$newKey]);
+			$underscoreArray[$newKey] = convertCamelCase( $val, $underscoreArray[$newKey] );
 		}
 	}
 	return $underscoreArray;
@@ -223,7 +223,7 @@ function dataObject() {
 	if ( has_action( 'tealium_addToDataObject' ) ) {
 		do_action( 'tealium_addToDataObject' );
 	}
-	
+
 	if ( get_option( 'tealiumDataStyle' ) == '1' ) {
 		// Convert camel case to underscore
 		$utagdata = apply_filters( 'tealium_convertCamelCase', $utagdata );
@@ -238,7 +238,7 @@ function dataObject() {
 /*
  * Encodes the data object array as JSON, outputs script tag
  */
-function encodedDataObject() {
+function encodedDataObject( $return = false ) {
 	$utagdata = dataObject();
 
 	// Encode data object
@@ -252,7 +252,13 @@ function encodedDataObject() {
 
 	// Output data object
 	if ( json_decode( $jsondata ) !== null ) {
-		echo "<script type=\"text/javascript\">\nvar utag_data = {$jsondata};\n</script>\n";
+		$utag_data = "<script type=\"text/javascript\">\nvar utag_data = {$jsondata};\n</script>\n";
+		if ( !$return ) {
+			echo $utag_data;
+		}
+		else {
+			return $utag_data;
+		}
 	}
 }
 
@@ -291,7 +297,7 @@ function tealiumTagBody( $tealiumTagCode ) {
 	$tealiumTagCode = getTealiumTagCode();
 
 	// Insert Tealium tag after body tag (sadly there is no wp_body hook)
-	$content = preg_replace( '#<body([^>]*)>#i', "<body$1>\n\n\t{$tealiumTagCode}", $content );
+	$content = preg_replace( '#<body([^>]*)>#i', "<body$1>\n\n\t{$tealiumTagCode}", $content, 1 );
 	echo $content;
 }
 
@@ -301,9 +307,10 @@ function tealiumTagBody( $tealiumTagCode ) {
 function tealiumTagHead( $tealiumTagCode ) {
 	$content = ob_get_clean();
 	$tealiumTagCode = getTealiumTagCode();
+	$tealiumDataObject = encodedDataObject( true );
 
 	// Insert Tealium tag immediately after head tag
-	$content = preg_replace( '#<head([^>]*)>#i', "<head$1>\n\n\t{$tealiumTagCode}", $content );
+	$content = preg_replace( '#<head([^>]*)>#i', "<head$1>\n{$tealiumDataObject}\n\t{$tealiumTagCode}", $content, 1 );
 	echo $content;
 }
 
@@ -355,6 +362,8 @@ if ( is_admin() ) {
 add_action( 'init', 'insertTealiumTag' );
 
 // Insert the data object
-add_action( 'wp_head', 'encodedDataObject', 0 );
+if ( get_option( 'tealiumTagLocation' ) != '3' ) {
+	add_action( 'wp_head', 'encodedDataObject', 0 );
+}
 
 ?>

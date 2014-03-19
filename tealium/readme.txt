@@ -97,6 +97,9 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 == Changelog ==
 
+= 1.5.1 =
+* Fixed opening head tag bug.
+
 = 1.5 =
 * Added search result count to data object.
 * Added actions to allow the data object and Tealium tag to be modified by theme/plugin developers.
@@ -122,6 +125,12 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.5.1 =
+Upgrade to add search result count to data layer.
+Hooks to allow the data object and Tealium tag to be modified by theme/plugin developers.
+New tag location setting (after opening head tag).
+Camel Case and underscore data layer style options.
 
 = 1.5 =
 Upgrade to add search result count to data layer.
