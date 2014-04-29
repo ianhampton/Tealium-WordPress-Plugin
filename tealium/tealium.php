@@ -3,7 +3,7 @@
 Plugin Name: Tealium
 Plugin URI: http://tealium.com
 Description: Adds the Tealium tag and creates a data layer for your Wordpress site.
-Version: 1.5.1
+Version: 1.6
 Author: Ian Hampton - Tealium EMEA
 Author URI: http://tealium.com
 Text Domain: tealium
@@ -23,6 +23,12 @@ function activate_tealium() {
 	add_option( 'tealiumTagCode', '' );
 	add_option( 'tealiumTagLocation', '' );
 	add_option( 'tealiumExclusions', '' );
+	add_option( 'tealiumAccount', '' );
+	add_option( 'tealiumProfile', '' );
+	add_option( 'tealiumEnvironment', '' );
+	add_option( 'tealiumTagType', '' );
+	add_option( 'tealiumCacheBuster', '' );
+	add_option( 'tealiumUtagSync', '' );
 }
 
 function deactive_tealium() {
@@ -31,13 +37,25 @@ function deactive_tealium() {
 	delete_option( 'tealiumTagLocation' );
 	delete_option( 'tealiumTagCode' );
 	delete_option( 'tealiumTag' );
+	delete_option( 'tealiumAccount' );
+	delete_option( 'tealiumProfile' );
+	delete_option( 'tealiumEnvironment' );
+	delete_option( 'tealiumTagType' );
+	delete_option( 'tealiumCacheBuster' );
+	delete_option( 'tealiumUtagSync' );
 }
 
 function admin_init_tealium() {
-	register_setting( 'tealiumTag', 'tealiumTagCode' );
-	register_setting( 'tealiumTag', 'tealiumTagLocation' );
-	register_setting( 'tealiumTag', 'tealiumDataStyle' );
-	register_setting( 'tealiumTag', 'tealiumExclusions' );
+	register_setting( 'tealiumTagBasic', 'tealiumAccount' );
+	register_setting( 'tealiumTagBasic', 'tealiumProfile' );
+	register_setting( 'tealiumTagBasic', 'tealiumEnvironment' );
+	register_setting( 'tealiumTagAdvanced', 'tealiumTagCode' );
+	register_setting( 'tealiumTagAdvanced', 'tealiumTagLocation' );
+	register_setting( 'tealiumTagAdvanced', 'tealiumDataStyle' );
+	register_setting( 'tealiumTagAdvanced', 'tealiumExclusions' );
+	register_setting( 'tealiumTagAdvanced', 'tealiumTagType' );
+	register_setting( 'tealiumTagAdvanced', 'tealiumCacheBuster' );
+	register_setting( 'tealiumTagAdvanced', 'tealiumUtagSync' );
 }
 
 function admin_menu_tealium() {
@@ -267,7 +285,42 @@ function encodedDataObject( $return = false ) {
  */
 function getTealiumTagCode() {
 	global $tealiumtag;
-	$tealiumtag = get_option( 'tealiumTagCode' );
+	$tealiumAdvanced = get_option( 'tealiumTagCode' );
+	$tealiumAccount = get_option( 'tealiumAccount' );
+	$tealiumProfile = get_option( 'tealiumProfile' );
+	$tealiumEnvironment = get_option( 'tealiumEnvironment' );
+	$tealiumTagType = get_option( 'tealiumTagType' );
+	$tealiumCacheBuster = get_option( 'tealiumCacheBuster' );
+	$cacheBuster = "";
+
+	if ( ( current_user_can( 'manage_options' ) ) && ( "1" == $tealiumCacheBuster ) ) {
+		$cacheBuster = "?wp=".time();
+	}
+
+	// Use the free text 'advanced' config if it appears to contain a tag
+	if ( ( !empty( $tealiumAdvanced ) ) && ( strpos( $tealiumAdvanced, 'utag.js' ) !== false ) ) {
+		$tealiumtag = $tealiumAdvanced;
+	}
+	else {
+		if ( ( !empty( $tealiumAccount ) ) && ( !empty( $tealiumProfile ) ) && ( !empty( $tealiumEnvironment ) ) ) {
+			if ( $tealiumTagType != '1' ) {
+				$tealiumtag = "<!-- Loading script asynchronously -->\n";
+				$tealiumtag .= "<script type=\"text/javascript\">\n";
+				$tealiumtag .= " (function(a,b,c,d){\n";
+				$tealiumtag .= " a='//tags.tiqcdn.com/utag/{$tealiumAccount}/{$tealiumProfile}/{$tealiumEnvironment}/utag.js{$cacheBuster}';\n";
+				$tealiumtag .= " b=document;c='script';d=b.createElement(c);d.src=a;d.type='text/java'+c;d.async=true;\n";
+				$tealiumtag .= " a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a);\n";
+				$tealiumtag .= " })();\n";
+				$tealiumtag .= "</script>\n";
+				$tealiumtag .= "<!-- END: T-WP -->\n";
+			}
+			else {
+				$tealiumtag = "<!-- Loading script synchronously -->\n";
+				$tealiumtag .= "<script type=\"text/javascript\" src=\"//tags.tiqcdn.com/utag/{$tealiumAccount}/{$tealiumProfile}/{$tealiumEnvironment}/utag.js{$cacheBuster}\"></script>\n";
+				$tealiumtag .= "<!-- END: T-WP -->\n";
+			}
+		}
+	}
 
 	// Include tag action if set
 	if ( has_action( 'tealium_tagCode' ) ) {
@@ -279,6 +332,28 @@ function getTealiumTagCode() {
 
 function outputTealiumTagCode() {
 	echo getTealiumTagCode();
+}
+
+/*
+ * Generate utag.sync.js tag
+ */
+function outputUtagSync() {
+	$tealiumAccount = get_option( 'tealiumAccount' );
+	$tealiumProfile = get_option( 'tealiumProfile' );
+	$tealiumEnvironment = get_option( 'tealiumEnvironment' );
+	$tealiumCacheBuster = get_option( 'tealiumCacheBuster' );
+	$cacheBuster = "";
+	$utagSync = "";
+
+	if ( ( current_user_can( 'manage_options' ) ) && ( "1" == $tealiumCacheBuster ) ) {
+		$cacheBuster = "?wp=".time();
+	}
+
+	if ( ( !empty( $tealiumAccount ) ) && ( !empty( $tealiumProfile ) ) && ( !empty( $tealiumEnvironment ) ) ) {
+		$utagSync = "<script src=\"//tags.tiqcdn.com/utag/{$tealiumAccount}/{$tealiumProfile}/{$tealiumEnvironment}/utag.sync.js{$cacheBuster}\"></script>\n";
+	}
+
+	echo $utagSync;
 }
 
 /*
@@ -297,7 +372,7 @@ function tealiumTagBody( $tealiumTagCode ) {
 	$tealiumTagCode = getTealiumTagCode();
 
 	// Insert Tealium tag after body tag (sadly there is no wp_body hook)
-	$content = preg_replace( '#<body([^>]*)>#i', "<body$1>\n\n\t{$tealiumTagCode}", $content, 1 );
+	$content = preg_replace( '#<body([^>]*)>#i', "<body$1>\n\n{$tealiumTagCode}", $content, 1 );
 	echo $content;
 }
 
@@ -310,7 +385,7 @@ function tealiumTagHead( $tealiumTagCode ) {
 	$tealiumDataObject = encodedDataObject( true );
 
 	// Insert Tealium tag immediately after head tag
-	$content = preg_replace( '#<head([^>]*)>#i', "<head$1>\n{$tealiumDataObject}\n\t{$tealiumTagCode}", $content, 1 );
+	$content = preg_replace( '#<head([^>]*)>#i', "<head$1>\n{$tealiumDataObject}\n{$tealiumTagCode}", $content, 1 );
 	echo $content;
 }
 
@@ -348,6 +423,12 @@ function insertTealiumTag() {
 			break;
 		}
 	}
+	
+	// Add utag.sync.js if required
+	$utagSync = get_option( 'tealiumUtagSync' );
+	if ("1" == $utagSync) {
+		add_action( 'wp_head', 'outputUtagSync', 0 );
+	}
 }
 
 if ( is_admin() ) {
@@ -363,7 +444,7 @@ add_action( 'init', 'insertTealiumTag' );
 
 // Insert the data object
 if ( get_option( 'tealiumTagLocation' ) != '3' ) {
-	add_action( 'wp_head', 'encodedDataObject', 0 );
+	add_action( 'wp_head', 'encodedDataObject', 1 );
 }
 
 ?>

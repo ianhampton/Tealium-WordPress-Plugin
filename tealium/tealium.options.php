@@ -1,6 +1,6 @@
 <?php
 // Create a dropdown field
-function select( $id, $options, $multiple = false ) {
+function selectList( $id, $options, $multiple = false ) {
 	$opt    = get_option( $id );
 	$output = '<select class="select" name="' . $id . '" id="' . $id . '">';
 	foreach ( $options as $val => $name ) {
@@ -26,10 +26,6 @@ function generateBulkDataSourceList() {
 			$output .= $metaKey->meta_key . $string;
 		}	
 	}
-	
-	$output .= 'siteName'. $string;
-	$output .= 'siteDescription'. $string;
-	$output .= 'pageType'. $string;
 	return $output;
 }
 
@@ -38,56 +34,130 @@ function generateBulkDataSourceList() {
 <div class="wrap">
 	<h2><?php _e( 'Tealium Settings', 'tealium' ); ?></h2>
 
-	<form method="post" action="options.php">
-		<?php wp_nonce_field( 'update-options' ); ?>
-		<?php settings_fields( 'tealiumTag' ); ?>
+	<?php 
+	$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'basic_settings'; 
+	?>
 
+	<h2 class="nav-tab-wrapper">
+    	<a href="?page=tealium&tab=basic_settings" class="nav-tab <?php echo $active_tab == 'basic_settings' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Basic Settings', 'tealium' ); ?></a>
+    	<a href="?page=tealium&tab=advanced_settings" class="nav-tab <?php echo $active_tab == 'advanced_settings' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Advanced Settings', 'tealium' ); ?></a>
+    	<a href="?page=tealium&tab=data_export" class="nav-tab <?php echo $active_tab == 'data_export' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Data Source Bulk Export', 'tealium' ); ?></a>
+	</h2>
+
+	<?php
+	if( $active_tab == 'basic_settings' ) {
+		?>
+		<form method="post" action="options.php">
+			<?php wp_nonce_field( 'update-options' ); ?>
+			<?php settings_fields( 'tealiumTagBasic' ); ?>
+			
+			<p>
+				<p>
+					<?php _e( 'Account:', 'tealium' ); ?>
+					<br />
+					<input name='tealiumAccount' size='30' type='text' value='<?php echo get_option( 'tealiumAccount' ); ?>' />
+					<br />
+					<small><?php _e( 'For example: <i>companyname</i>', 'tealium' ); ?></small>
+				</p>
+				<p>
+					<?php _e( 'Profile:', 'tealium' ); ?>
+					<br />
+					<input name='tealiumProfile' size='30' type='text' value='<?php echo get_option( 'tealiumProfile' ); ?>' />
+					<br />
+					<small><?php _e( 'For example: <i>main</i>', 'tealium' ); ?></small>
+				</p>
+				<p>
+					<?php _e( 'Environment:', 'tealium' ); ?>
+					<br />
+					<input name='tealiumEnvironment' size='30' type='text' value='<?php echo get_option( 'tealiumEnvironment' ); ?>' />
+					<br />
+					<small><?php _e( 'For example: <i>prod</i>', 'tealium' ); ?></small>
+				</p>
+			</p>
+			<input type="hidden" name="action" value="update" />
+
+			<p class="submit"><input type="submit" class="button-primary" value="<?php _e( 'Save Changes', 'tealium' ); ?>" /></p>
+		</form>
+		<?php
+	}
+	else if( $active_tab == 'advanced_settings' ) {
+		?>
+		<form method="post" action="options.php">
+			<?php wp_nonce_field( 'update-options' ); ?>
+			<?php settings_fields( 'tealiumTagAdvanced' ); ?>
+			<p>
+				<?php _e( 'Tag location:', 'tealium' ); ?>
+				<br />
+				<?php
+				$options = array();
+				$options[] = __( 'After opening body tag (recommended)', 'tealium' );
+				$options[] = __( 'Header - Before closing head tag', 'tealium' );
+				$options[] = __( 'Footer - Before closing body tag', 'tealium' );
+				$options[] = __( 'Immediately after opening head tag', 'tealium' );
+				echo selectList( 'tealiumTagLocation', $options );
+				?>
+			</p>
+			<p>
+				<?php _e( 'Tag type:', 'tealium' ); ?>
+				<br />
+				<?php
+				$options = array();
+				$options[] = __( 'Asynchronous (recommended)', 'tealium' );
+				$options[] = __( 'Synchronous', 'tealium' );
+				echo selectList( 'tealiumTagType', $options );
+				?>
+			</p>
+			<p>
+				<?php _e( 'Data layer style:', 'tealium' ); ?>
+				<br />
+				<?php
+				$options = array();
+				$options[] = __( 'CamelCase (legacy)', 'tealium' );
+				$options[] = __( 'Underscore (recommended)', 'tealium' );
+				echo selectList( 'tealiumDataStyle', $options );
+				?>
+				<br />
+				<small><?php _e( 'For example CamelCase = <i>postDate, siteName</i>. Underscore = <i>post_date, site_name</i>.', 'tealium' ); ?></small>
+			</p>
+			<p>
+				<?php _e( 'Keys to exclude from data object:', 'tealium' ); ?>
+				<br />
+				<input name='tealiumExclusions' size='50' type='text' value='<?php echo get_option( 'tealiumExclusions' ); ?>' />
+				<br />
+				<small><?php _e( 'Comma separated list - <i>postDate, custom_field_1</i>.', 'tealium' ); ?></small>
+			</p>
+			<p>
+				<label for="tealiumUtagSync">
+					<input type="checkbox" name="tealiumUtagSync" id="tealiumUtagSync" value="1"<?php checked( 1 == get_option( 'tealiumUtagSync' ) ); ?> />
+					<?php _e( 'Add utag.sync.js tag', 'tealium' ); ?>
+				</label>
+			</p>
+			<p>
+				<label for="tealiumCacheBuster">
+					<input type="checkbox" name="tealiumCacheBuster" id="tealiumCacheBuster" value="1"<?php checked( 1 == get_option( 'tealiumCacheBuster' ) ); ?> />
+					<?php _e( 'Add cache buster for admin users', 'tealium' ); ?>
+				</label>
+			</p>
+			<p>
+				<br />
+				<?php _e( 'Advanced tag code:', 'tealium' ); ?>
+				<br />
+				<textarea name="tealiumTagCode" rows="10" cols="100"><?php echo get_option( 'tealiumTagCode' ); ?></textarea>
+				<br />
+				<small><?php _e( 'Optional: Tealium tag code pasted above will be used instead of any account/profile/environment values entered under Basic Settings.', 'tealium' ); ?></small>
+			</p>
+			<input type="hidden" name="action" value="update" />
+
+			<p class="submit"><input type="submit" class="button-primary" value="<?php _e( 'Save Changes', 'tealium' ); ?>" /></p>
+		</form>
+	<?php
+	}
+	else {
+		?>
 		<p>
-			<?php _e( 'Paste your Tealium tag code below to add it to your site:', 'tealium' ); ?>
-			<br />
-			<textarea name="tealiumTagCode" rows="10" cols="100"><?php echo get_option( 'tealiumTagCode' ); ?></textarea>
+			<textarea readonly="readonly" name="csvExport" rows="20" cols="100"><?php echo generateBulkDataSourceList() ?></textarea>
 		</p>
-
-		<h3><?php _e( 'Advanced Settings', 'tealium' ); ?></h3>
-		<p>
-			<?php _e( 'Tealium tag location:', 'tealium' ); ?>
-			<br />
-			<?php
-			$options = array();
-			$options[] = __( 'After opening body tag (recommended)', 'tealium' );
-			$options[] = __( 'Header - Before closing head tag', 'tealium' );
-			$options[] = __( 'Footer - Before closing body tag', 'tealium' );
-			$options[] = __( 'Immediately after opening head tag', 'tealium' );
-			echo select( 'tealiumTagLocation', $options );
-			?>
-		</p>
-		<p>
-			<?php _e( 'Data layer style:', 'tealium' ); ?>
-			<br />
-			<?php
-			$options = array();
-			$options[] = __( 'CamelCase (legacy)', 'tealium' );
-			$options[] = __( 'Underscore (recommended)', 'tealium' );
-			echo select( 'tealiumDataStyle', $options );
-			?>
-			<br />
-			<small><?php _e( 'For example CamelCase = <i>postDate, siteName</i>. Underscore = <i>post_date, site_name</i>.', 'tealium' ); ?></small>
-		</p>
-		<p>
-			<?php _e( 'Keys to exclude from data object:', 'tealium' ); ?>
-			<br />
-			<input name='tealiumExclusions' size='50' type='text' value='<?php echo get_option( 'tealiumExclusions' ); ?>' />
-			<br />
-			<small><?php _e( 'Comma separated list - <i>postDate, custom_field_1</i>.', 'tealium' ); ?></small>
-		</p>
-
-		<input type="hidden" name="action" value="update" />
-
-		<p class="submit"><input type="submit" class="button-primary" value="<?php _e( 'Save Changes', 'tealium' ); ?>" /></p>
-
-	</form>
-	
-	<!-- Coming soon! -->
-	<!--<h2><?php _e( 'Data Source Bulk Export', 'tealium' ); ?></h2>
-	<textarea name="csvExport" rows="10" cols="100"><?php echo generateBulkDataSourceList() ?></textarea>-->
+		<?php
+	}
+	?>
 </div>
