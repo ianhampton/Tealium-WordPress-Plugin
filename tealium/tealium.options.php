@@ -32,7 +32,9 @@ function generateBulkDataSourceList() {
 ?>
 
 <div class="wrap">
-	<h2><?php _e( 'Tealium Settings', 'tealium' ); ?></h2>
+	<div class="tealium-icon">
+		<h2><?php _e( 'Tealium Settings', 'tealium' ); ?></h2>
+	</div>
 
 	<?php 
 	$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'basic_settings'; 
@@ -155,7 +157,7 @@ function generateBulkDataSourceList() {
 	else {
 		?>
 		<p>
-			<textarea readonly="readonly" name="csvExport" rows="20" cols="100"><?php echo generateBulkDataSourceList() ?></textarea>
+			<textarea readonly="readonly" name="csvExport" rows="20" cols="90"><?php echo generateBulkDataSourceList() ?></textarea>
 		</p>
 		<?php
 	}

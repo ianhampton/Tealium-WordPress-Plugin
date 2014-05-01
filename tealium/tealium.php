@@ -56,18 +56,26 @@ function admin_init_tealium() {
 	register_setting( 'tealiumTagAdvanced', 'tealiumTagType' );
 	register_setting( 'tealiumTagAdvanced', 'tealiumCacheBuster' );
 	register_setting( 'tealiumTagAdvanced', 'tealiumUtagSync' );
+
+	wp_register_style( 'tealium-stylesheet', plugins_url('tealium.css', __FILE__) );
 }
 
 function admin_menu_tealium() {
-	add_options_page( __( 'Tealium Tag Settings', 'tealium' ), __( 'Tealium Settings', 'tealium' ), 'manage_options' , 'tealium', 'options_page_tealium' );
+	$page = add_options_page( __( 'Tealium Tag Settings', 'tealium' ), __( 'Tealium Settings', 'tealium' ), 'manage_options' , 'tealium', 'options_page_tealium' );
+	add_action( 'admin_print_styles-' . $page, 'admin_styles_tealium' );
 }
 
 function options_page_tealium() {
 	include plugin_dir_path( __FILE__ ).'tealium.options.php';
 }
 
+function admin_styles_tealium() {
+       wp_enqueue_style( 'tealium-stylesheet' );
+   }
+
+
 /*
- * Add an admin message when looking at the plugins page if the Tealium tag is not found
+ * Admin messages
  */
 function admin_notices_tealium() {
 	global $pagenow;
@@ -76,6 +84,7 @@ function admin_notices_tealium() {
 	$tealiumProfile = get_option( 'tealiumProfile' );
 	$tealiumEnvironment = get_option( 'tealiumEnvironment' );
 
+	// Add an admin message when looking at the plugins page if the Tealium tag is not found
 	if ( $pagenow == 'plugins.php' ) {
 		if ( empty( $tealiumTagCode ) && empty( $tealiumAccount ) ) {
 			$html = '<div class="updated">';
