@@ -72,14 +72,32 @@ function options_page_tealium() {
 function admin_notices_tealium() {
 	global $pagenow;
 	$tealiumTagCode = get_option( 'tealiumTagCode' );
+	$tealiumAccount = get_option( 'tealiumAccount' );
+	$tealiumProfile = get_option( 'tealiumProfile' );
+	$tealiumEnvironment = get_option( 'tealiumEnvironment' );
 
-	if ( ( $pagenow == 'plugins.php' ) && ( empty( $tealiumTagCode ) ) ) {
-		$html = '<div class="updated">';
-		$html .= '<p>';
-		$html .= sprintf( __( 'Please enter your Tealium tag code <a href="%s">over here</a>.', 'tealium' ), esc_url( 'options-general.php?page=tealium' ) );
-		$html .= '</p>';
-		$html .= '</div>';
-		echo $html;
+	if ( $pagenow == 'plugins.php' ) {
+		if ( empty( $tealiumTagCode ) && empty( $tealiumAccount ) ) {
+			$html = '<div class="updated">';
+			$html .= '<p>';
+			$html .= sprintf( __( 'Please enter your Tealium tag code <a href="%s">over here</a>.', 'tealium' ), esc_url( 'options-general.php?page=tealium' ) );
+			$html .= '</p>';
+			$html .= '</div>';
+			echo $html;
+		}
+	}
+
+	// Add a warning if utag.sync is enabled but no account is specified
+	$utagSync = get_option( 'tealiumUtagSync' );
+	if ( "1" == $utagSync ) {
+		if ( empty( $tealiumAccount ) || empty( $tealiumProfile ) || empty( $tealiumEnvironment ) ) {
+			$html = '<div class="error">';
+			$html .= '<p>';
+			$html .= sprintf( __( 'You must provide account/profile/environment details to use utag.sync.js. <a href="%s">Please update your Tealium settings &raquo;</a>', 'tealium' ), esc_url( 'options-general.php?page=tealium' ) );
+			$html .= '</p>';
+			$html .= '</div>';
+			echo $html;
+		}
 	}
 }
 
@@ -423,10 +441,10 @@ function insertTealiumTag() {
 			break;
 		}
 	}
-	
+
 	// Add utag.sync.js if required
 	$utagSync = get_option( 'tealiumUtagSync' );
-	if ("1" == $utagSync) {
+	if ( "1" == $utagSync ) {
 		add_action( 'wp_head', 'outputUtagSync', 0 );
 	}
 }
