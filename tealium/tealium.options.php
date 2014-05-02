@@ -16,16 +16,23 @@ function selectList( $id, $options, $multiple = false ) {
 }
 
 function generateBulkDataSourceList() {
+	$output = '';
+
 	global $wpdb;
 	$metaKeys = $wpdb->get_results( "SELECT DISTINCT(meta_key) FROM {$wpdb->postmeta} ORDER BY meta_id DESC" );
+
+	$string = ', "UDO Variable", "Imported from Wordpress"&#13;&#10;';
 	
-	$string = ', "Data Layer", "Imported from Wordpress"&#13;&#10;';
 	if ( $metaKeys ) {
-		$output = '';
 		foreach ( $metaKeys as $metaKey ) {
-			$output .= $metaKey->meta_key . $string;
+
+			// Exclude meta keys with invalid characters
+			if ( !preg_match( '/[^a-zA-Z0-9_$.]/', $metaKey->meta_key ) ) {
+				$output .= $metaKey->meta_key . $string;
+			}
 		}	
 	}
+
 	return $output;
 }
 
