@@ -44,8 +44,8 @@ function generateBulkDataSourceList() {
 
 	if ( $basicLayer ) {
 		foreach ( $basicLayer as $key => $value ) {
-        	$output .= $key . ', "'. $UDOString .'", "'. $value .'"&#13;&#10;';
-    	}
+			$output .= $key . ', "'. $UDOString .'", "'. $value .'"&#13;&#10;';
+		}
 	}
 
 	global $wpdb;
