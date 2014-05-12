@@ -70,8 +70,8 @@ function options_page_tealium() {
 }
 
 function admin_styles_tealium() {
-       wp_enqueue_style( 'tealium-stylesheet' );
-   }
+	wp_enqueue_style( 'tealium-stylesheet' );
+}
 
 
 /*
@@ -79,6 +79,7 @@ function admin_styles_tealium() {
  */
 function admin_notices_tealium() {
 	global $pagenow;
+	$currentScreen = get_current_screen();
 	$tealiumTagCode = get_option( 'tealiumTagCode' );
 	$tealiumAccount = get_option( 'tealiumAccount' );
 	$tealiumProfile = get_option( 'tealiumProfile' );
@@ -86,26 +87,43 @@ function admin_notices_tealium() {
 
 	// Add an admin message when looking at the plugins page if the Tealium tag is not found
 	if ( $pagenow == 'plugins.php' ) {
-		if ( empty( $tealiumTagCode ) && empty( $tealiumAccount ) ) {
+		if ( empty( $tealiumTagCode ) && ( empty( $tealiumAccount ) || empty( $tealiumProfile ) || empty( $tealiumEnvironment ) ) ) {
 			$html = '<div class="updated">';
 			$html .= '<p>';
-			$html .= sprintf( __( 'Please enter your Tealium tag code <a href="%s">over here</a>.', 'tealium' ), esc_url( 'options-general.php?page=tealium' ) );
+			$html .= sprintf( __( 'Please enter your Tealium account details or tag code <a href="%s">over here &raquo;</a>', 'tealium' ), esc_url( 'options-general.php?page=tealium' ) );
 			$html .= '</p>';
 			$html .= '</div>';
 			echo $html;
 		}
 	}
 
-	// Add a warning if utag.sync is enabled but no account is specified
-	$utagSync = get_option( 'tealiumUtagSync' );
-	if ( "1" == $utagSync ) {
-		if ( empty( $tealiumAccount ) || empty( $tealiumProfile ) || empty( $tealiumEnvironment ) ) {
-			$html = '<div class="error">';
-			$html .= '<p>';
-			$html .= sprintf( __( 'You must provide account/profile/environment details to use utag.sync.js. <a href="%s">Please update your Tealium settings &raquo;</a>', 'tealium' ), esc_url( 'options-general.php?page=tealium' ) );
-			$html .= '</p>';
-			$html .= '</div>';
-			echo $html;
+	// Add an error message if utag.sync is enabled but no account is specified
+	if ( $currentScreen->base == 'settings_page_tealium' ) {
+		$utagSync = get_option( 'tealiumUtagSync' );
+		if ( "1" == $utagSync ) {
+			if ( empty( $tealiumAccount ) || empty( $tealiumProfile ) || empty( $tealiumEnvironment ) ) {
+				$html = '<div class="error">';
+				$html .= '<p>';
+				$html .= 'You must provide account/profile/environment details to use utag.sync.js.';
+				$html .= '</p>';
+				$html .= '</div>';
+				echo $html;
+			}
+		}
+	}
+
+	// Add an error message if the cache buster is enabled but no account is specified
+	if ( $currentScreen->base == 'settings_page_tealium' ) {
+		$tealiumCacheBuster = get_option( 'tealiumCacheBuster' );
+		if ( "1" == $tealiumCacheBuster ) {
+			if ( empty( $tealiumAccount ) || empty( $tealiumProfile ) || empty( $tealiumEnvironment ) ) {
+				$html = '<div class="error">';
+				$html .= '<p>';
+				$html .= 'You must provide account/profile/environment details to use a cache buster.';
+				$html .= '</p>';
+				$html .= '</div>';
+				echo $html;
+			}
 		}
 	}
 }

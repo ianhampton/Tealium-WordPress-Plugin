@@ -18,17 +18,47 @@ function selectList( $id, $options, $multiple = false ) {
 function generateBulkDataSourceList() {
 	$output = '';
 
+	$UDOString = 'UDO Variable';
+
+	// Array of basic data sources
+	$basicLayer = array(
+		"siteName" => "Contains the site's name",
+		"siteDescription" => "Contains the site's description",
+		"postCategory" => "Contains the post's category, e.g. 'technology'",
+		"postTags" => "Contains the post tags, e.g. 'tag management'",
+		"pageType" => "Contains the page type, e.g. 'archive', 'homepage', or 'search'",
+		"postTitle" => "Contains the post's title",
+		"postAuthor" => "Contains the post author",
+		"postDate" => "Contains the post date",
+		"searchQuery" => "Contains the search query conducted by user",
+		"searchResults" => "Contains the number of search results returned"
+	);
+
+	if ( get_option( 'tealiumDataStyle' ) == '1' ) {
+		// Convert camel case to underscore
+		$basicLayer = apply_filters( 'tealium_convertCamelCase', $basicLayer );
+	}
+
+	// Remove excluded keys
+	$basicLayer = apply_filters( 'tealium_removeExclusions', $basicLayer );
+
+	if ( $basicLayer ) {
+		foreach ( $basicLayer as $key => $value ) {
+        	$output .= $key . ', "'. $UDOString .'", "'. $value .'"&#13;&#10;';
+    	}
+	}
+
 	global $wpdb;
 	$metaKeys = $wpdb->get_results( "SELECT DISTINCT(meta_key) FROM {$wpdb->postmeta} ORDER BY meta_id DESC" );
 
-	$string = ', "UDO Variable", "Imported from Wordpress"&#13;&#10;';
+	$bulkString = ', "'. $UDOString .'", "Imported from Wordpress"&#13;&#10;';
 	
 	if ( $metaKeys ) {
 		foreach ( $metaKeys as $metaKey ) {
 
 			// Exclude meta keys with invalid characters
 			if ( !preg_match( '/[^a-zA-Z0-9_$.]/', $metaKey->meta_key ) ) {
-				$output .= $metaKey->meta_key . $string;
+				$output .= $metaKey->meta_key . $bulkString;
 			}
 		}	
 	}
@@ -164,7 +194,10 @@ function generateBulkDataSourceList() {
 	else {
 		?>
 		<p>
-			<textarea readonly="readonly" name="csvExport" rows="20" cols="90"><?php echo generateBulkDataSourceList() ?></textarea>
+			<?php _e( 'Bulk export of basic data sources and all valid custom fields. Copy and paste into the \'Bulk Import from CSV\' option under Data Layer in Tealium IQ.', 'tealium' ); ?>
+			<p>
+				<textarea readonly="readonly" name="csvExport" rows="20" cols="90"><?php echo generateBulkDataSourceList() ?></textarea>
+			</p>
 		</p>
 		<?php
 	}
