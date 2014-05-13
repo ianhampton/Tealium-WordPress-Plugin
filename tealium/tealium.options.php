@@ -19,6 +19,7 @@ function generateBulkDataSourceList() {
 	$output = '';
 
 	$UDOString = 'UDO Variable';
+	$bulkString = "Imported from Wordpress";
 
 	// Array of basic data sources
 	$basicLayer = array(
@@ -39,28 +40,30 @@ function generateBulkDataSourceList() {
 		$basicLayer = apply_filters( 'tealium_convertCamelCase', $basicLayer );
 	}
 
-	// Remove excluded keys
-	$basicLayer = apply_filters( 'tealium_removeExclusions', $basicLayer );
-
-	if ( $basicLayer ) {
-		foreach ( $basicLayer as $key => $value ) {
-			$output .= $key . ', "'. $UDOString .'", "'. $value .'"&#13;&#10;';
-		}
-	}
-
+	// Get all meta keys from WP DB
 	global $wpdb;
-	$metaKeys = $wpdb->get_results( "SELECT DISTINCT(meta_key) FROM {$wpdb->postmeta} ORDER BY meta_id DESC" );
-
-	$bulkString = ', "'. $UDOString .'", "Imported from Wordpress"&#13;&#10;';
+	$metaKeys = $wpdb->get_results( "SELECT DISTINCT(meta_key) FROM {$wpdb->postmeta} ORDER BY meta_key ASC" );
 	
+	$metaLayer = array();
+
 	if ( $metaKeys ) {
 		foreach ( $metaKeys as $metaKey ) {
-
 			// Exclude meta keys with invalid characters
 			if ( !preg_match( '/[^a-zA-Z0-9_$.]/', $metaKey->meta_key ) ) {
-				$output .= $metaKey->meta_key . $bulkString;
+				$metaLayer[$metaKey->meta_key] = $bulkString;
 			}
 		}	
+	}
+
+	$dataLayer = array_merge($basicLayer, $metaLayer);
+
+	// Remove excluded keys
+	$dataLayer = apply_filters( 'tealium_removeExclusions', $dataLayer );
+
+	if ( $dataLayer ) {
+		foreach ( $dataLayer as $key => $value ) {
+			$output .= $key . ', "'. $UDOString .'", "'. $value .'"&#13;&#10;';
+		}
 	}
 
 	return $output;
