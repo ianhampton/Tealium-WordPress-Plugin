@@ -8,3 +8,11 @@ div.tealium-icon h2 {
 	padding-left: 35px;
 	margin-bottom: 8px;
 }
+
+table.form-table.basic th {
+	width: 130px;
+}
+
+h3.advanced {
+	margin-top: 20px;
+}
