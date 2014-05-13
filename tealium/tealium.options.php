@@ -187,13 +187,13 @@ function generateBulkDataSourceList() {
 					<td>
 						<label for="tealiumCacheBuster">
 							<input type="checkbox" name="tealiumCacheBuster" id="tealiumCacheBuster" value="1"<?php checked( 1 == get_option( 'tealiumCacheBuster' ) ); ?> />
-							<?php _e( 'Add a cache buster for admin users', 'tealium' ); ?>
+							<?php _e( 'Add a cache buster for users who can edit content', 'tealium' ); ?>
 						</label>
 					</td>
 				</tr>
 			</table>
 
-			<h3 class="advanced"><label for="tealiumTagCode"><?php _e( 'Advanced tag code', 'tealium' ); ?></label></h3>
+			<h3 class="advanced"><label for="tealiumTagCode"><?php _e( 'Advanced Tag Code', 'tealium' ); ?></label></h3>
 			<p class="description"><?php _e( 'Optional: Tealium tag code pasted below will be used instead of any account/profile/environment values entered under Basic Settings.', 'tealium' ); ?></p>
 			<textarea name="tealiumTagCode" id="tealiumTagCode" rows="10" cols="100"><?php echo get_option( 'tealiumTagCode' ); ?></textarea>
 

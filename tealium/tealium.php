@@ -198,6 +198,7 @@ function wooCommerceData( $utagdata ) {
 
 	// Remove the extensive individual product details
 	unset( $woocart['cart_contents'] );
+	unset( $woocart['cart_session_data'] );
 	unset( $woocart['tax'] );
 
 	// Get currency in use
@@ -338,7 +339,7 @@ function getTealiumTagCode() {
 	$tealiumCacheBuster = get_option( 'tealiumCacheBuster' );
 	$cacheBuster = "";
 
-	if ( ( current_user_can( 'manage_options' ) ) && ( "1" == $tealiumCacheBuster ) ) {
+	if ( ( current_user_can( 'edit_posts' ) ) && ( "1" == $tealiumCacheBuster ) ) {
 		$cacheBuster = "?wp=".time();
 	}
 
@@ -390,7 +391,7 @@ function outputUtagSync() {
 	$cacheBuster = "";
 	$utagSync = "";
 
-	if ( ( current_user_can( 'manage_options' ) ) && ( "1" == $tealiumCacheBuster ) ) {
+	if ( ( current_user_can( 'edit_posts' ) ) && ( "1" == $tealiumCacheBuster ) ) {
 		$cacheBuster = "?wp=".time();
 	}
 
