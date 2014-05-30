@@ -187,7 +187,7 @@ function generateBulkDataSourceList() {
 					<td>
 						<label for="tealiumCacheBuster">
 							<input type="checkbox" name="tealiumCacheBuster" id="tealiumCacheBuster" value="1"<?php checked( 1 == get_option( 'tealiumCacheBuster' ) ); ?> />
-							<?php _e( 'Add a cache buster for users who can edit content', 'tealium' ); ?>
+							<?php _e( 'Add a cache buster for content editors', 'tealium' ); ?>
 						</label>
 					</td>
 				</tr>
