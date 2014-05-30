@@ -3,8 +3,8 @@ Contributors: tealium
 Tags: analytics, tealium, data object, data layer
 Donate link: http://tealium.com
 Requires at least: 3.0.1
-Tested up to: 3.8.1
-Stable tag: 1.4
+Tested up to: 3.9.1
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,13 +41,16 @@ To install:
 
 * Install from the Wordpress plugin repository, or copy to your wp-content/plugins folder.
 * Enable through the plugins section within Wordpress.
-* Paste your Tealium code into 'Tealium Settings' under Settings in Wordpress and save.
+* Enter your account/profile/environment settings into 'Tealium Settings' under Settings in the admin menu.
 * That's it!
 
 Optional steps:
 
 * The position of the Tealium tag can be selected.
 * If there are items you wish to exclude from your data object, add the keys as a comma separated list.
+* A cache buster can be enabled for content editors.
+* Use the data source bulk export to quickly import your Wordpress custom fields into Tealium.
+* Choose between sync/async deployments.
 
 == Frequently Asked Questions ==
 
@@ -67,6 +70,7 @@ Optional steps:
 * After opening body tag (recommended)
 * Header - Before closing head tag
 * Footer - Before closing body tag
+* Immediately after the opening head tag
 
 = Is WooCommerce supported? =
 
@@ -94,8 +98,18 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 4. ...and rolls them into the data object.
 5. Custom fields and other meta data is also supported.
 6. Many existing Wordpress plugins make use of meta data, so your data object should be rich with potential data sources.
+7. Advanced settings allow a number of options to be configured and features enabled.
+8. The bulk export feature allows you to quickly import your Wordpress data sources into Tealium.
 
 == Changelog ==
+
+= 2.0 =
+* UI makeover.
+* Quickly deploy Tealium by providing account/profile/environment details.
+* Data source export.
+* Cache buster for content editors.
+* Support for utag.sync.js file.
+* Support for sync/async deployments.
 
 = 1.5.1 =
 * Fixed opening head tag bug.
@@ -125,6 +139,9 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.0 =
+Updated UI, many new features. Now only requires account/profile/environment details - manually pasting in code from the code center is still supported.
 
 = 1.5.1 =
 Upgrade to add search result count to data layer.
