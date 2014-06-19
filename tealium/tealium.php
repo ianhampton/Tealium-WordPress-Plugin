@@ -3,7 +3,7 @@
 Plugin Name: Tealium
 Plugin URI: http://tealium.com
 Description: Adds the Tealium tag and creates a data layer for your Wordpress site.
-Version: 2.0
+Version: 2.1
 Author: Ian Hampton - Tealium EMEA
 Author URI: http://tealium.com
 Text Domain: tealium
@@ -29,6 +29,7 @@ function activate_tealium() {
 	add_option( 'tealiumTagType', '' );
 	add_option( 'tealiumCacheBuster', '' );
 	add_option( 'tealiumUtagSync', '' );
+	add_option( 'tealiumDNSPrefetch', '1' );
 }
 
 function deactive_tealium() {
@@ -43,6 +44,7 @@ function deactive_tealium() {
 	delete_option( 'tealiumTagType' );
 	delete_option( 'tealiumCacheBuster' );
 	delete_option( 'tealiumUtagSync' );
+	delete_option( 'tealiumDNSPrefetch' );
 }
 
 function admin_init_tealium() {
@@ -56,6 +58,7 @@ function admin_init_tealium() {
 	register_setting( 'tealiumTagAdvanced', 'tealiumTagType' );
 	register_setting( 'tealiumTagAdvanced', 'tealiumCacheBuster' );
 	register_setting( 'tealiumTagAdvanced', 'tealiumUtagSync' );
+	register_setting( 'tealiumTagAdvanced', 'tealiumDNSPrefetch' );
 
 	wp_register_style( 'tealium-stylesheet', plugins_url('tealium.css', __FILE__) );
 }
@@ -402,6 +405,16 @@ function outputUtagSync() {
 	echo $utagSync;
 }
 
+
+/*
+ * Generate DNS Prefetch
+ */
+function outputDNSPrefetch() {
+	$dnsPrefetch = "<link rel=\"dns-prefetch\" href=\"//tags.tiqcdn.com\">\n";
+	echo $dnsPrefetch;
+}
+
+
 /*
  * Enable output buffer
  */
@@ -473,7 +486,13 @@ function insertTealiumTag() {
 	// Add utag.sync.js if required
 	$utagSync = get_option( 'tealiumUtagSync' );
 	if ( "1" == $utagSync ) {
-		add_action( 'wp_head', 'outputUtagSync', 0 );
+		add_action( 'wp_head', 'outputUtagSync', 1 );
+	}
+
+	// Add utag.sync.js if required
+	$dnsPrefetch = get_option( 'tealiumDNSPrefetch' );
+	if ( "1" == $dnsPrefetch ) {
+		add_action( 'wp_head', 'outputDNSPrefetch', 0 );
 	}
 }
 
@@ -490,7 +509,7 @@ add_action( 'init', 'insertTealiumTag' );
 
 // Insert the data object
 if ( get_option( 'tealiumTagLocation' ) != '3' ) {
-	add_action( 'wp_head', 'encodedDataObject', 1 );
+	add_action( 'wp_head', 'encodedDataObject', 2 );
 }
 
 ?>

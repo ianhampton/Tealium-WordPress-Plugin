@@ -191,6 +191,15 @@ function generateBulkDataSourceList() {
 						</label>
 					</td>
 				</tr>
+				<tr>
+					<th scope="row"><?php _e( 'DNS Prefetching', 'tealium' ); ?></th>
+					<td>
+						<label for="tealiumDNSPrefetch">
+							<input type="checkbox" name="tealiumDNSPrefetch" id="tealiumDNSPrefetch" value="1"<?php checked( 1 == get_option( 'tealiumDNSPrefetch' ) ); ?> />
+							<?php _e( 'Enable DNS Prefetching', 'tealium' ); ?>
+						</label>
+					</td>
+				</tr>
 			</table>
 
 			<h3 class="advanced"><label for="tealiumTagCode"><?php _e( 'Advanced Tag Code', 'tealium' ); ?></label></h3>

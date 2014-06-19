@@ -4,7 +4,7 @@ Tags: analytics, tealium, data object, data layer
 Donate link: http://tealium.com
 Requires at least: 3.0.1
 Tested up to: 3.9.1
-Stable tag: 2.0
+Stable tag: 2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,6 +103,9 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 == Changelog ==
 
+= 2.1 =
+* Added DNS Prefetching option
+
 = 2.0 =
 * UI makeover.
 * Quickly deploy Tealium by providing account/profile/environment details.
@@ -139,6 +142,9 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.1 =
+Added DNS prefetching option.
 
 = 2.0 =
 Updated UI, many new features. Now only requires account/profile/environment details - manually pasting in code from the code center is still supported.
