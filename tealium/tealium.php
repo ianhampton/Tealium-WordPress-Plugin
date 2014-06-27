@@ -343,7 +343,7 @@ function getTealiumTagCode() {
 	$cacheBuster = "";
 
 	if ( ( current_user_can( 'edit_posts' ) ) && ( "1" == $tealiumCacheBuster ) ) {
-		$cacheBuster = "?wp=".time();
+		$cacheBuster = "?_cb=".time();
 	}
 
 	// Use the free text 'advanced' config if it appears to contain a tag
@@ -395,7 +395,7 @@ function outputUtagSync() {
 	$utagSync = "";
 
 	if ( ( current_user_can( 'edit_posts' ) ) && ( "1" == $tealiumCacheBuster ) ) {
-		$cacheBuster = "?wp=".time();
+		$cacheBuster = "?_cb=".time();
 	}
 
 	if ( ( !empty( $tealiumAccount ) ) && ( !empty( $tealiumProfile ) ) && ( !empty( $tealiumEnvironment ) ) ) {
