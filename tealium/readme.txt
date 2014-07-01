@@ -104,7 +104,8 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 == Changelog ==
 
 = 2.1 =
-* Added DNS Prefetching option
+* Added DNS Prefetching option.
+* Alter cache busting parameter.
 
 = 2.0 =
 * UI makeover.
@@ -144,7 +145,7 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 == Upgrade Notice ==
 
 = 2.1 =
-Added DNS prefetching option.
+Added DNS prefetching option. Alter cache busting parameter.
 
 = 2.0 =
 Updated UI, many new features. Now only requires account/profile/environment details - manually pasting in code from the code center is still supported.
