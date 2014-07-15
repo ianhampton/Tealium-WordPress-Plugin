@@ -3,7 +3,7 @@
 Plugin Name: Tealium
 Plugin URI: http://tealium.com
 Description: Adds the Tealium tag and creates a data layer for your Wordpress site.
-Version: 2.1
+Version: 2.1.1
 Author: Ian Hampton - Tealium EMEA
 Author URI: http://tealium.com
 Text Domain: tealium
@@ -60,7 +60,7 @@ function admin_init_tealium() {
 	register_setting( 'tealiumTagAdvanced', 'tealiumUtagSync' );
 	register_setting( 'tealiumTagAdvanced', 'tealiumDNSPrefetch' );
 
-	wp_register_style( 'tealium-stylesheet', plugins_url('tealium.css', __FILE__) );
+	wp_register_style( 'tealium-stylesheet', plugins_url( 'tealium.css', __FILE__ ) );
 }
 
 function admin_menu_tealium() {
@@ -315,6 +315,9 @@ function encodedDataObject( $return = false ) {
 	}
 	else {
 		$jsondata = json_encode( $utagdata );
+		
+		// Apply pretty print function
+		$jsondata = prettyPrintJSON( $jsondata );
 	}
 
 	// Output data object
@@ -327,6 +330,65 @@ function encodedDataObject( $return = false ) {
 			return $utag_data;
 		}
 	}
+}
+
+/*
+ * Pretty print JSON for PHP 5.3 and lower
+ */
+function prettyPrintJSON( $json ) {
+	$result = '';
+	$level = 0;
+	$in_quotes = false;
+	$in_escape = false;
+	$ends_line_level = NULL;
+	$json_length = strlen( $json );
+
+	for ( $i = 0; $i < $json_length; $i++ ) {
+		$char = $json[$i];
+		$new_line_level = NULL;
+		$post = "";
+		if ( $ends_line_level !== NULL ) {
+			$new_line_level = $ends_line_level;
+			$ends_line_level = NULL;
+		}
+		if ( $in_escape ) {
+			$in_escape = false;
+		} else if ( $char === '"' ) {
+				$in_quotes = !$in_quotes;
+			} else if ( ! $in_quotes ) {
+				switch ( $char ) {
+				case '}': case ']':
+					$level--;
+					$ends_line_level = NULL;
+					$new_line_level = $level;
+					break;
+
+				case '{': case '[':
+					$level++;
+				case ',':
+					$ends_line_level = $level;
+					break;
+
+				case ':':
+					$post = " ";
+					break;
+
+				case " ": case "\t": case "\n": case "\r":
+					$char = "";
+					$ends_line_level = $new_line_level;
+					$new_line_level = NULL;
+					break;
+				}
+			} else if ( $char === '\\' ) {
+				$in_escape = true;
+			}
+		if ( $new_line_level !== NULL ) {
+			$result .= "\n".str_repeat( "\t", $new_line_level );
+		}
+		$result .= $char.$post;
+	}
+
+	return $result;
 }
 
 /*
