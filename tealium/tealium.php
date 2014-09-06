@@ -271,7 +271,7 @@ function dataObject() {
 	else if ( is_search() ) {
 			// Collect search and result data
 			$searchQuery = get_search_query();
-			$searchResults = &new WP_Query( 's='.str_replace( ' ', '+', $searchQuery.'&showposts=-1' ) );
+			$searchResults = new WP_Query( 's='.str_replace( ' ', '+', $searchQuery.'&showposts=-1' ) );
 			$searchCount = $searchResults->post_count;
 			wp_reset_query();
 
