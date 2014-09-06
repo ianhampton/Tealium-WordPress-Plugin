@@ -105,6 +105,7 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 = 2.1.1 =
 * Added pretty printing of JSON object for folder versions of PHP.
+* Add name parameter on bulk data source export.
 
 = 2.1 =
 * Added DNS Prefetching option
@@ -147,7 +148,8 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 == Upgrade Notice ==
 
 = 2.1.1 =
-Added DNS prefetching option.
+Added pretty printing of JSON object for folder versions of PHP.
+Add name parameter on bulk data source export.
 
 = 2.1 =
 Added DNS prefetching option.

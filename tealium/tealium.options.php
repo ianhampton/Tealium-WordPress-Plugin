@@ -62,7 +62,7 @@ function generateBulkDataSourceList() {
 
 	if ( $dataLayer ) {
 		foreach ( $dataLayer as $key => $value ) {
-			$output .= $key . ', "'. $UDOString .'", "'. $value .'"&#13;&#10;';
+			$output .= '"'. ucwords( trim( str_replace( '_', ' ', $key ) ) ) .'", ' . $key . ', "'. $UDOString .'", "'. $value .'"&#13;&#10;';
 		}
 	}
 
