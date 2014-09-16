@@ -15,6 +15,21 @@ function selectList( $id, $options, $multiple = false ) {
 	return $output;
 }
 
+// Create a friendly alias from UDO parameters
+function formatAsName( $key ) {
+	// '_product_photo' becomes 'Product Photo'
+	$key = ucwords( trim( str_replace( '_', ' ', $key ) ) );
+
+	// Handle camelCase
+	$key = join( preg_split( '/(^[^A-Z]+|[A-Z][^A-Z]+)/', $key, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE ), ' ');
+
+	// Remove multiple spaces etc.
+	$key = preg_replace( '/(\s\s+|\t|\n)/', ' ', $key );
+	
+	return $key;
+}
+
+// Create an exhaustive list of possible data sources
 function generateBulkDataSourceList() {
 	$output = '';
 
@@ -43,7 +58,7 @@ function generateBulkDataSourceList() {
 	// Get all meta keys from WP DB
 	global $wpdb;
 	$metaKeys = $wpdb->get_results( "SELECT DISTINCT(meta_key) FROM {$wpdb->postmeta} ORDER BY meta_key ASC" );
-	
+
 	$metaLayer = array();
 
 	if ( $metaKeys ) {
@@ -52,23 +67,22 @@ function generateBulkDataSourceList() {
 			if ( !preg_match( '/[^a-zA-Z0-9_$.]/', $metaKey->meta_key ) ) {
 				$metaLayer[$metaKey->meta_key] = $bulkString;
 			}
-		}	
+		}
 	}
 
-	$dataLayer = array_merge($basicLayer, $metaLayer);
+	$dataLayer = array_merge( $basicLayer, $metaLayer );
 
 	// Remove excluded keys
 	$dataLayer = apply_filters( 'tealium_removeExclusions', $dataLayer );
 
 	if ( $dataLayer ) {
 		foreach ( $dataLayer as $key => $value ) {
-			$output .= '"'. ucwords( trim( str_replace( '_', ' ', $key ) ) ) .'", ' . $key . ', "'. $UDOString .'", "'. $value .'"&#13;&#10;';
+			$output .= $key . ', "'. $UDOString .'", "'. $value .'", "'. formatAsName( $key ) .'"&#13;&#10;';
 		}
 	}
 
 	return $output;
 }
-
 ?>
 
 <div class="wrap">
@@ -76,9 +90,7 @@ function generateBulkDataSourceList() {
 		<h2><?php _e( 'Tealium Settings', 'tealium' ); ?></h2>
 	</div>
 
-	<?php 
-	$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'basic_settings'; 
-	?>
+	<?php $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'basic_settings'; ?>
 
 	<h2 class="nav-tab-wrapper">
     	<a href="?page=tealium&tab=basic_settings" class="nav-tab <?php echo $active_tab == 'basic_settings' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Basic Settings', 'tealium' ); ?></a>
@@ -87,7 +99,7 @@ function generateBulkDataSourceList() {
 	</h2>
 
 	<?php
-	if( $active_tab == 'basic_settings' ) {
+	if ( $active_tab == 'basic_settings' ) {
 		?>
 		<form method="post" action="options.php">
 			<?php wp_nonce_field( 'update-options' ); ?>
@@ -123,7 +135,7 @@ function generateBulkDataSourceList() {
 		</form>
 		<?php
 	}
-	else if( $active_tab == 'advanced_settings' ) {
+	else if ( $active_tab == 'advanced_settings' ) {
 		?>
 		<form method="post" action="options.php">
 			<?php wp_nonce_field( 'update-options' ); ?>
@@ -210,8 +222,8 @@ function generateBulkDataSourceList() {
 
 			<p class="submit"><input type="submit" class="button-primary" value="<?php _e( 'Save Changes', 'tealium' ); ?>" /></p>
 		</form>
-	<?php
-	}
+		<?php
+		}
 	else {
 		?>
 		<p>
