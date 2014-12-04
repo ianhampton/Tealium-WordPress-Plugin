@@ -212,6 +212,15 @@ function generateBulkDataSourceList() {
 						</label>
 					</td>
 				</tr>
+				<tr>
+					<th scope="row"><?php _e( 'EU Only', 'tealium' ); ?></th>
+					<td>
+						<label for="tealiumEUOnly">
+							<input type="checkbox" name="tealiumEUOnly" id="tealiumEUOnly" value="1"<?php checked( 1 == get_option( 'tealiumEUOnly' ) ); ?> />
+							<?php _e( 'Only use EU based CDN nodes', 'tealium' ); ?>
+						</label>
+					</td>
+				</tr>
 			</table>
 
 			<h3 class="advanced"><label for="tealiumTagCode"><?php _e( 'Advanced Tag Code', 'tealium' ); ?></label></h3>

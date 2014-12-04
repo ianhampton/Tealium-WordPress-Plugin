@@ -30,6 +30,7 @@ function activate_tealium() {
 	add_option( 'tealiumCacheBuster', '' );
 	add_option( 'tealiumUtagSync', '' );
 	add_option( 'tealiumDNSPrefetch', '1' );
+	add_option( 'tealiumEUOnly', '' );
 }
 
 function deactive_tealium() {
@@ -45,6 +46,7 @@ function deactive_tealium() {
 	delete_option( 'tealiumCacheBuster' );
 	delete_option( 'tealiumUtagSync' );
 	delete_option( 'tealiumDNSPrefetch' );
+	delete_option( 'tealiumEUOnly' );
 }
 
 function admin_init_tealium() {
@@ -59,6 +61,7 @@ function admin_init_tealium() {
 	register_setting( 'tealiumTagAdvanced', 'tealiumCacheBuster' );
 	register_setting( 'tealiumTagAdvanced', 'tealiumUtagSync' );
 	register_setting( 'tealiumTagAdvanced', 'tealiumDNSPrefetch' );
+	register_setting( 'tealiumTagAdvanced', 'tealiumEUOnly' );
 
 	wp_register_style( 'tealium-stylesheet', plugins_url( 'tealium.css', __FILE__ ) );
 }
@@ -411,6 +414,7 @@ function getTealiumTagCode() {
 	$tealiumTagType = get_option( 'tealiumTagType' );
 	$tealiumCacheBuster = get_option( 'tealiumCacheBuster' );
 	$cacheBuster = "";
+	$tiqCDN = getCDNURL();
 
 	if ( ( current_user_can( 'edit_posts' ) ) && ( "1" == $tealiumCacheBuster ) ) {
 		$cacheBuster = "?_cb=".time();
@@ -426,7 +430,7 @@ function getTealiumTagCode() {
 				$tealiumtag = "<!-- Loading script asynchronously -->\n";
 				$tealiumtag .= "<script type=\"text/javascript\">\n";
 				$tealiumtag .= " (function(a,b,c,d){\n";
-				$tealiumtag .= " a='//tags.tiqcdn.com/utag/{$tealiumAccount}/{$tealiumProfile}/{$tealiumEnvironment}/utag.js{$cacheBuster}';\n";
+				$tealiumtag .= " a='//{$tiqCDN}/utag/{$tealiumAccount}/{$tealiumProfile}/{$tealiumEnvironment}/utag.js{$cacheBuster}';\n";
 				$tealiumtag .= " b=document;c='script';d=b.createElement(c);d.src=a;d.type='text/java'+c;d.async=true;\n";
 				$tealiumtag .= " a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a);\n";
 				$tealiumtag .= " })();\n";
@@ -435,7 +439,7 @@ function getTealiumTagCode() {
 			}
 			else {
 				$tealiumtag = "<!-- Loading script synchronously -->\n";
-				$tealiumtag .= "<script type=\"text/javascript\" src=\"//tags.tiqcdn.com/utag/{$tealiumAccount}/{$tealiumProfile}/{$tealiumEnvironment}/utag.js{$cacheBuster}\"></script>\n";
+				$tealiumtag .= "<script type=\"text/javascript\" src=\"//{$tiqCDN}/utag/{$tealiumAccount}/{$tealiumProfile}/{$tealiumEnvironment}/utag.js{$cacheBuster}\"></script>\n";
 				$tealiumtag .= "<!-- END: T-WP -->\n";
 			}
 		}
@@ -463,13 +467,15 @@ function outputUtagSync() {
 	$tealiumCacheBuster = get_option( 'tealiumCacheBuster' );
 	$cacheBuster = "";
 	$utagSync = "";
+	$tiqCDN = getCDNURL();
+	
 
 	if ( ( current_user_can( 'edit_posts' ) ) && ( "1" == $tealiumCacheBuster ) ) {
 		$cacheBuster = "?_cb=".time();
 	}
 
 	if ( ( !empty( $tealiumAccount ) ) && ( !empty( $tealiumProfile ) ) && ( !empty( $tealiumEnvironment ) ) ) {
-		$utagSync = "<script src=\"//tags.tiqcdn.com/utag/{$tealiumAccount}/{$tealiumProfile}/{$tealiumEnvironment}/utag.sync.js{$cacheBuster}\"></script>\n";
+		$utagSync = "<script src=\"//{$tiqCDN}/utag/{$tealiumAccount}/{$tealiumProfile}/{$tealiumEnvironment}/utag.sync.js{$cacheBuster}\"></script>\n";
 	}
 
 	echo $utagSync;
@@ -480,8 +486,16 @@ function outputUtagSync() {
  * Generate DNS Prefetch
  */
 function outputDNSPrefetch() {
-	$dnsPrefetch = "<link rel=\"dns-prefetch\" href=\"//tags.tiqcdn.com\">\n";
+	$dnsPrefetch = "<link rel=\"dns-prefetch\" href=\"//".getCDNURL()."\">\n";
 	echo $dnsPrefetch;
+}
+
+/*
+ * Get the CDN URL based on EU setting
+ */
+function getCDNURL() {
+	$tiqCDN = ("1" == get_option( 'tealiumEUOnly' ) ? "tags-eu.tiqcdn.com" : "tags.tiqcdn.com");
+	return $tiqCDN;
 }
 
 

@@ -106,6 +106,7 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 = 2.1.3 =
 * Add tag and category archive specific page types and post titles.
+* Added the option to use EU only CDN nodes.
 
 = 2.1.2 =
 * Change name parameter location to match TiQ update.
@@ -156,6 +157,7 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 = 2.1.3 =
 Add tag and category archive specific page types and post titles.
+Added the option to use EU only CDN nodes.
 
 = 2.1.2 =
 Change name parameter location to match TiQ update.
