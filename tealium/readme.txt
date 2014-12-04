@@ -3,8 +3,8 @@ Contributors: tealium
 Tags: analytics, tealium, data object, data layer
 Donate link: http://tealium.com
 Requires at least: 3.0.1
-Tested up to: 4.0
-Stable tag: 2.1.2
+Tested up to: 4.0.1
+Stable tag: 2.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,6 +103,10 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 == Changelog ==
 
+
+= 2.1.3 =
+* Add tag and category archive specific page types and post titles.
+
 = 2.1.2 =
 * Change name parameter location to match TiQ update.
 
@@ -149,6 +153,9 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.1.3 =
+Add tag and category archive specific page types and post titles.
 
 = 2.1.2 =
 Change name parameter location to match TiQ update.

@@ -3,7 +3,7 @@
 Plugin Name: Tealium
 Plugin URI: http://tealium.com
 Description: Adds the Tealium tag and creates a data layer for your Wordpress site.
-Version: 2.1.2
+Version: 2.1.3
 Author: Ian Hampton - Tealium EMEA
 Author URI: http://tealium.com
 Text Domain: tealium
@@ -262,6 +262,14 @@ function dataObject() {
 			$utagdata = array_merge( $utagdata, $meta );
 		}
 	}
+	else if ( is_category() ) {
+			$utagdata['pageType'] = "category-archive";
+			$utagdata['postTitle'] = single_cat_title( 'Category archive: ', false );
+		}
+	else if ( is_tag() ) {
+			$utagdata['pageType'] = "tag-archive";
+			$utagdata['postTitle'] = single_tag_title( 'Tag archive: ', false );
+		}
 	else if ( is_archive() ) {
 			$utagdata['pageType'] = "archive";
 		}
