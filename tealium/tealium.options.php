@@ -191,6 +191,15 @@ function generateBulkDataSourceList() {
 					</td>
 				</tr>
 				<tr>
+					<th scope="row"><?php _e( 'Exclude meta data', 'tealium' ); ?></th>
+					<td>
+						<label for="tealiumExcludeMetaData">
+							<input type="checkbox" name="tealiumExcludeMetaData" id="tealiumExcludeMetaData" value="1"<?php checked( 1 == get_option( 'tealiumExcludeMetaData' ) ); ?> />
+							<?php _e( 'Remove ALL Wordpress meta data from data layer', 'tealium' ); ?>
+						</label>
+					</td>
+				</tr>
+				<tr>
 					<th scope="row"><?php _e( 'Synchronous file', 'tealium' ); ?></th>
 					<td>
 						<label for="tealiumUtagSync">
@@ -223,15 +232,6 @@ function generateBulkDataSourceList() {
 						<label for="tealiumEUOnly">
 							<input type="checkbox" name="tealiumEUOnly" id="tealiumEUOnly" value="1"<?php checked( 1 == get_option( 'tealiumEUOnly' ) ); ?> />
 							<?php _e( 'Only use EU based CDN nodes', 'tealium' ); ?>
-						</label>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row"><?php _e( 'Exclude meta data', 'tealium' ); ?></th>
-					<td>
-						<label for="tealiumExcludeMetaData">
-							<input type="checkbox" name="tealiumExcludeMetaData" id="tealiumExcludeMetaData" value="1"<?php checked( 1 == get_option( 'tealiumExcludeMetaData' ) ); ?> />
-							<?php _e( 'Remove Wordpress meta data from data layer', 'tealium' ); ?>
 						</label>
 					</td>
 				</tr>
