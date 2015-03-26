@@ -31,6 +31,7 @@ function activate_tealium() {
 	add_option( 'tealiumUtagSync', '' );
 	add_option( 'tealiumDNSPrefetch', '1' );
 	add_option( 'tealiumEUOnly', '' );
+	add_option( 'tealiumExcludeMetaData', '' );
 }
 
 function deactive_tealium() {
@@ -47,6 +48,7 @@ function deactive_tealium() {
 	delete_option( 'tealiumUtagSync' );
 	delete_option( 'tealiumDNSPrefetch' );
 	delete_option( 'tealiumEUOnly' );
+	delete_option( 'tealiumExcludeMetaData' );
 }
 
 function admin_init_tealium() {
@@ -62,6 +64,7 @@ function admin_init_tealium() {
 	register_setting( 'tealiumTagAdvanced', 'tealiumUtagSync' );
 	register_setting( 'tealiumTagAdvanced', 'tealiumDNSPrefetch' );
 	register_setting( 'tealiumTagAdvanced', 'tealiumEUOnly' );
+	register_setting( 'tealiumTagAdvanced', 'tealiumExcludeMetaData' );
 
 	wp_register_style( 'tealium-stylesheet', plugins_url( 'tealium.css', __FILE__ ) );
 }
@@ -260,10 +263,13 @@ function dataObject() {
 		$utagdata['postDate'] = get_the_time( 'Y/m/d' );
 
 		// Get and merge post meta data
-		$meta = get_post_meta( get_the_ID() );
-		if ( $meta ) {
-			$utagdata = array_merge( $utagdata, $meta );
+		if ( "1" !== get_option( 'tealiumExcludeMetaData' ) ) {
+			$meta = get_post_meta( get_the_ID() );
+			if ( $meta ) {
+				$utagdata = array_merge( $utagdata, $meta );
+			}
 		}
+		
 	}
 	else if ( is_category() ) {
 			$utagdata['pageType'] = "category-archive";

@@ -56,21 +56,26 @@ function generateBulkDataSourceList() {
 	}
 
 	// Get all meta keys from WP DB
-	global $wpdb;
-	$metaKeys = $wpdb->get_results( "SELECT DISTINCT(meta_key) FROM {$wpdb->postmeta} ORDER BY meta_key ASC" );
+	if ( "1" !== get_option( 'tealiumExcludeMetaData' ) ) {
+		global $wpdb;
+		$metaKeys = $wpdb->get_results( "SELECT DISTINCT(meta_key) FROM {$wpdb->postmeta} ORDER BY meta_key ASC" );
 
-	$metaLayer = array();
+		$metaLayer = array();
 
-	if ( $metaKeys ) {
-		foreach ( $metaKeys as $metaKey ) {
-			// Exclude meta keys with invalid characters
-			if ( !preg_match( '/[^a-zA-Z0-9_$.]/', $metaKey->meta_key ) ) {
-				$metaLayer[$metaKey->meta_key] = $bulkString;
+		if ( $metaKeys ) {
+			foreach ( $metaKeys as $metaKey ) {
+				// Exclude meta keys with invalid characters
+				if ( !preg_match( '/[^a-zA-Z0-9_$.]/', $metaKey->meta_key ) ) {
+					$metaLayer[$metaKey->meta_key] = $bulkString;
+				}
 			}
 		}
-	}
 
-	$dataLayer = array_merge( $basicLayer, $metaLayer );
+		$dataLayer = array_merge( $basicLayer, $metaLayer );
+	}
+	else {
+		$dataLayer = $basicLayer;
+	}
 
 	// Remove excluded keys
 	$dataLayer = apply_filters( 'tealium_removeExclusions', $dataLayer );
@@ -204,7 +209,7 @@ function generateBulkDataSourceList() {
 					</td>
 				</tr>
 				<tr>
-					<th scope="row"><?php _e( 'DNS Prefetching', 'tealium' ); ?></th>
+					<th scope="row"><?php _e( 'DNS prefetching', 'tealium' ); ?></th>
 					<td>
 						<label for="tealiumDNSPrefetch">
 							<input type="checkbox" name="tealiumDNSPrefetch" id="tealiumDNSPrefetch" value="1"<?php checked( 1 == get_option( 'tealiumDNSPrefetch' ) ); ?> />
@@ -213,11 +218,20 @@ function generateBulkDataSourceList() {
 					</td>
 				</tr>
 				<tr>
-					<th scope="row"><?php _e( 'EU Only', 'tealium' ); ?></th>
+					<th scope="row"><?php _e( 'EU only', 'tealium' ); ?></th>
 					<td>
 						<label for="tealiumEUOnly">
 							<input type="checkbox" name="tealiumEUOnly" id="tealiumEUOnly" value="1"<?php checked( 1 == get_option( 'tealiumEUOnly' ) ); ?> />
 							<?php _e( 'Only use EU based CDN nodes', 'tealium' ); ?>
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><?php _e( 'Exclude meta data', 'tealium' ); ?></th>
+					<td>
+						<label for="tealiumExcludeMetaData">
+							<input type="checkbox" name="tealiumExcludeMetaData" id="tealiumExcludeMetaData" value="1"<?php checked( 1 == get_option( 'tealiumExcludeMetaData' ) ); ?> />
+							<?php _e( 'Remove Wordpress meta data from data layer', 'tealium' ); ?>
 						</label>
 					</td>
 				</tr>
