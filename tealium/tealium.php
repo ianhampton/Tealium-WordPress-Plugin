@@ -212,6 +212,32 @@ function wooCommerceData( $utagdata ) {
 
 	// Get currency in use
 	$woocart['site_currency'] = get_woocommerce_currency();
+	
+	// Add order data
+	if ( is_order_received_page() ) {
+		$order_id  = apply_filters( 'woocommerce_thankyou_order_id', empty( $_GET['order'] ) ? ($GLOBALS["wp"]->query_vars["order-received"] ? $GLOBALS["wp"]->query_vars["order-received"] : 0) : absint( $_GET['order'] ) );
+		$order_key = apply_filters( 'woocommerce_thankyou_order_key', empty( $_GET['key'] ) ? '' : woocommerce_clean( $_GET['key'] ) );
+		$orderData = array();
+		
+		if ( $order_id > 0 ) {
+			$order = new WC_Order( $order_id );
+			if ( $order->order_key != $order_key )
+				unset( $order );
+		}
+		
+		if ( isset( $order ) ) {
+			$orderData["order_id"] = $order->get_order_number();
+			$orderData["order_total"]  = $order->get_total();
+			$orderData["order_shipping"] = $order->get_total_shipping();
+			$orderData["order_tax"] = $order->get_total_tax();
+			$orderData["order_payment_type"] = $order->payment_method_title;
+			$orderData["order_shipping_type"] = $order->get_shipping_method();
+			$orderData["order_coupon_code"] = implode( ", ", $order->get_used_coupons() );
+		}
+		
+		$utagdata = array_merge( $utagdata, $orderData );
+	}
+	
 
 	// Merge shop and cart details into utagdata
 	$utagdata = array_merge( $utagdata, $woocart );
