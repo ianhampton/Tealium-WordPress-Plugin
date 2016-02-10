@@ -171,7 +171,12 @@ function convertCamelCase( $utagdata, $arrayHolder = array() ) {
 		if ( !is_array( $val ) ) {
 			$underscoreArray[$newKey] = $val;
 		} else {
-			$underscoreArray[$newKey] = convertCamelCase( $val, $underscoreArray[$newKey] );
+			if ( array_key_exists( $newKey, $underscoreArray ) ) {
+				$underscoreArray[$newKey] = convertCamelCase( $val, $underscoreArray[$newKey] );
+			}
+			else {
+				$underscoreArray[$newKey] = convertCamelCase( $val, $underscoreArray[$key] );
+			}
 		}
 	}
 	return $underscoreArray;
@@ -212,19 +217,19 @@ function wooCommerceData( $utagdata ) {
 
 	// Get currency in use
 	$woocart['site_currency'] = get_woocommerce_currency();
-	
+
 	// Add order data
 	if ( is_order_received_page() ) {
-		$order_id  = apply_filters( 'woocommerce_thankyou_order_id', empty( $_GET['order'] ) ? ($GLOBALS["wp"]->query_vars["order-received"] ? $GLOBALS["wp"]->query_vars["order-received"] : 0) : absint( $_GET['order'] ) );
+		$order_id  = apply_filters( 'woocommerce_thankyou_order_id', empty( $_GET['order'] ) ? ( $GLOBALS["wp"]->query_vars["order-received"] ? $GLOBALS["wp"]->query_vars["order-received"] : 0 ) : absint( $_GET['order'] ) );
 		$order_key = apply_filters( 'woocommerce_thankyou_order_key', empty( $_GET['key'] ) ? '' : woocommerce_clean( $_GET['key'] ) );
 		$orderData = array();
-		
+
 		if ( $order_id > 0 ) {
 			$order = new WC_Order( $order_id );
 			if ( $order->order_key != $order_key )
 				unset( $order );
 		}
-		
+
 		if ( isset( $order ) ) {
 			$orderData["order_id"] = $order->get_order_number();
 			$orderData["order_total"]  = $order->get_total();
@@ -234,10 +239,10 @@ function wooCommerceData( $utagdata ) {
 			$orderData["order_shipping_type"] = $order->get_shipping_method();
 			$orderData["order_coupon_code"] = implode( ", ", $order->get_used_coupons() );
 		}
-		
+
 		$utagdata = array_merge( $utagdata, $orderData );
 	}
-	
+
 
 	// Merge shop and cart details into utagdata
 	$utagdata = array_merge( $utagdata, $woocart );
@@ -295,7 +300,7 @@ function dataObject() {
 				$utagdata = array_merge( $utagdata, $meta );
 			}
 		}
-		
+
 	}
 	else if ( is_category() ) {
 			$utagdata['pageType'] = "category-archive";
@@ -358,7 +363,7 @@ function encodedDataObject( $return = false ) {
 	}
 	else {
 		$jsondata = json_encode( $utagdata );
-		
+
 		// Apply pretty print function
 		$jsondata = prettyPrintJSON( $jsondata );
 	}
@@ -500,7 +505,7 @@ function outputUtagSync() {
 	$cacheBuster = "";
 	$utagSync = "";
 	$tiqCDN = getCDNURL();
-	
+
 
 	if ( ( current_user_can( 'edit_posts' ) ) && ( "1" == $tealiumCacheBuster ) ) {
 		$cacheBuster = "?_cb=".time();
@@ -526,7 +531,7 @@ function outputDNSPrefetch() {
  * Get the CDN URL based on EU setting
  */
 function getCDNURL() {
-	$tiqCDN = ("1" == get_option( 'tealiumEUOnly' ) ? "tags-eu.tiqcdn.com" : "tags.tiqcdn.com");
+	$tiqCDN = ( "1" == get_option( 'tealiumEUOnly' ) ? "tags-eu.tiqcdn.com" : "tags.tiqcdn.com" );
 	return $tiqCDN;
 }
 
