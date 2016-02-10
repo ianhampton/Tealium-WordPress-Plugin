@@ -226,8 +226,9 @@ function wooCommerceData( $utagdata ) {
 
 		if ( $order_id > 0 ) {
 			$order = new WC_Order( $order_id );
-			if ( $order->order_key != $order_key )
+			if ( $order->order_key != $order_key ) {
 				unset( $order );
+			}
 		}
 
 		if ( isset( $order ) ) {
