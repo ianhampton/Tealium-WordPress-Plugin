@@ -3,8 +3,8 @@ Contributors: tealium
 Tags: analytics, tealium, data object, data layer
 Donate link: http://tealium.com
 Requires at least: 3.0.1
-Tested up to: 4.1.1
-Stable tag: 2.1.4
+Tested up to: 4.4.2
+Stable tag: 2.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,6 +103,10 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 == Changelog ==
 
+= 2.1.5 =
+* Minor bug fixes.
+* CSS updates.
+
 = 2.1.4 =
 * Added the option to exclude Wordpress meta data.
 
@@ -156,6 +160,9 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.1.5 =
+Fix a minor bug and admin area styling updates.
 
 = 2.1.4 =
 Added the option to exclude Wordpress meta data.
