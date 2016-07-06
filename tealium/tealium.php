@@ -140,7 +140,7 @@ function admin_notices_tealium() {
 /*
  * Removes exclusions listed in admin setting
  */
-function removeExclusions( $utagdata ) {
+function tealiumRemoveExclusions( $utagdata ) {
 	$exclusions = get_option( 'tealiumExclusions' );
 	if ( !empty( $exclusions ) ) {
 
@@ -156,7 +156,7 @@ function removeExclusions( $utagdata ) {
 	}
 	return $utagdata;
 }
-add_filter( 'tealium_removeExclusions', 'removeExclusions' );
+add_filter( 'tealium_removeExclusions', 'tealiumRemoveExclusions' );
 
 
 /*

@@ -1,6 +1,6 @@
 <?php
 // Create a dropdown field
-function selectList( $id, $options, $multiple = false ) {
+function tealiumSelectList( $id, $options, $multiple = false ) {
 	$opt    = get_option( $id );
 	$output = '<select class="select" name="' . $id . '" id="' . $id . '">';
 	foreach ( $options as $val => $name ) {
@@ -16,7 +16,7 @@ function selectList( $id, $options, $multiple = false ) {
 }
 
 // Create a friendly alias from UDO parameters
-function formatAsName( $key ) {
+function tealiumFormatAsName( $key ) {
 	// '_product_photo' becomes 'Product Photo'
 	$key = ucwords( trim( str_replace( '_', ' ', $key ) ) );
 
@@ -30,7 +30,7 @@ function formatAsName( $key ) {
 }
 
 // Create an exhaustive list of possible data sources
-function generateBulkDataSourceList() {
+function tealiumGenerateBulkDataSourceList() {
 	$output = '';
 
 	$UDOString = 'UDO Variable';
@@ -82,7 +82,7 @@ function generateBulkDataSourceList() {
 
 	if ( $dataLayer ) {
 		foreach ( $dataLayer as $key => $value ) {
-			$output .= $key . ', "'. $UDOString .'", "'. $value .'", "'. formatAsName( $key ) .'"&#13;&#10;';
+			$output .= $key . ', "'. $UDOString .'", "'. $value .'", "'. tealiumFormatAsName( $key ) .'"&#13;&#10;';
 		}
 	}
 
@@ -156,7 +156,7 @@ function generateBulkDataSourceList() {
 						$options[] = __( 'Header - Before closing head tag', 'tealium' );
 						$options[] = __( 'Footer - Before closing body tag', 'tealium' );
 						$options[] = __( 'Immediately after opening head tag', 'tealium' );
-						echo selectList( 'tealiumTagLocation', $options );
+						echo tealiumSelectList( 'tealiumTagLocation', $options );
 						?>
 					</td>
 				</tr>
@@ -167,7 +167,7 @@ function generateBulkDataSourceList() {
 						$options = array();
 						$options[] = __( 'Asynchronous (recommended)', 'tealium' );
 						$options[] = __( 'Synchronous', 'tealium' );
-						echo selectList( 'tealiumTagType', $options );
+						echo tealiumSelectList( 'tealiumTagType', $options );
 						?>
 					</td>
 				</tr>
@@ -178,7 +178,7 @@ function generateBulkDataSourceList() {
 						$options = array();
 						$options[] = __( 'CamelCase (legacy)', 'tealium' );
 						$options[] = __( 'Underscore (recommended)', 'tealium' );
-						echo selectList( 'tealiumDataStyle', $options );
+						echo tealiumSelectList( 'tealiumDataStyle', $options );
 						?>
 						<p class="description"><?php _e( 'CamelCase = <code>postDate, siteName</code> Underscore = <code>post_date, site_name</code>', 'tealium' ); ?></p>
 					</td>
@@ -251,7 +251,7 @@ function generateBulkDataSourceList() {
 		?>
 		<p>
 			<p class="description"><?php _e( 'Bulk export of basic data sources and all valid custom fields. Copy and paste into the \'Bulk Import from CSV\' option under Data Layer in Tealium IQ.', 'tealium' ); ?></p>
-			<p><textarea readonly="readonly" name="csvExport" rows="20" cols="90"><?php echo generateBulkDataSourceList() ?></textarea></p>
+			<p><textarea readonly="readonly" name="csvExport" rows="20" cols="90"><?php echo tealiumGenerateBulkDataSourceList() ?></textarea></p>
 		</p>
 		<?php
 	}
