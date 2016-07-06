@@ -162,7 +162,7 @@ add_filter( 'tealium_removeExclusions', 'removeExclusions' );
 /*
  * Convert camel case to underscores
  */
-function convertCamelCase( $utagdata, $arrayHolder = array() ) {
+function tealiumConvertCamelCase( $utagdata, $arrayHolder = array() ) {
 	$underscoreArray = !empty( $arrayHolder ) ? $arrayHolder : array();
 	foreach ( $utagdata as $key => $val ) {
 		$newKey = preg_replace( '/[A-Z]/', '_$0', $key );
@@ -172,22 +172,22 @@ function convertCamelCase( $utagdata, $arrayHolder = array() ) {
 			$underscoreArray[$newKey] = $val;
 		} else {
 			if ( array_key_exists( $newKey, $underscoreArray ) ) {
-				$underscoreArray[$newKey] = convertCamelCase( $val, $underscoreArray[$newKey] );
+				$underscoreArray[$newKey] = tealiumConvertCamelCase( $val, $underscoreArray[$newKey] );
 			}
 			else {
-				$underscoreArray[$newKey] = convertCamelCase( $val, $underscoreArray[$key] );
+				$underscoreArray[$newKey] = tealiumConvertCamelCase( $val, $underscoreArray[$key] );
 			}
 		}
 	}
 	return $underscoreArray;
 }
-add_filter( 'tealium_convertCamelCase', 'convertCamelCase' );
+add_filter( 'tealium_convertCamelCase', 'tealiumConvertCamelCase' );
 
 
 /*
  * Adds WooCommerce data to data layer
  */
-function wooCommerceData( $utagdata ) {
+function tealiumWooCommerceData( $utagdata ) {
 	global $woocommerce;
 
 	// Get cart details
@@ -251,7 +251,7 @@ function wooCommerceData( $utagdata ) {
 
 	return $utagdata;
 }
-add_filter( 'tealium_wooCommerceData', 'wooCommerceData' );
+add_filter( 'tealium_wooCommerceData', 'tealiumWooCommerceData' );
 
 /*
  * Creates the data object as an array
@@ -354,7 +354,7 @@ function dataObject() {
 /*
  * Encodes the data object array as JSON, outputs script tag
  */
-function encodedDataObject( $return = false ) {
+function tealiumEncodedDataObject( $return = false ) {
 	$utagdata = dataObject();
 
 	// Encode data object
@@ -452,7 +452,7 @@ function getTealiumTagCode() {
 	$tealiumTagType = get_option( 'tealiumTagType' );
 	$tealiumCacheBuster = get_option( 'tealiumCacheBuster' );
 	$cacheBuster = "";
-	$tiqCDN = getCDNURL();
+	$tiqCDN = tealiumGetCDNURL();
 
 	if ( ( current_user_can( 'edit_posts' ) ) && ( "1" == $tealiumCacheBuster ) ) {
 		$cacheBuster = "?_cb=".time();
@@ -498,14 +498,14 @@ function outputTealiumTagCode() {
 /*
  * Generate utag.sync.js tag
  */
-function outputUtagSync() {
+function tealiumOutputUtagSync() {
 	$tealiumAccount = get_option( 'tealiumAccount' );
 	$tealiumProfile = get_option( 'tealiumProfile' );
 	$tealiumEnvironment = get_option( 'tealiumEnvironment' );
 	$tealiumCacheBuster = get_option( 'tealiumCacheBuster' );
 	$cacheBuster = "";
 	$utagSync = "";
-	$tiqCDN = getCDNURL();
+	$tiqCDN = tealiumGetCDNURL();
 
 
 	if ( ( current_user_can( 'edit_posts' ) ) && ( "1" == $tealiumCacheBuster ) ) {
@@ -523,15 +523,15 @@ function outputUtagSync() {
 /*
  * Generate DNS Prefetch
  */
-function outputDNSPrefetch() {
-	$dnsPrefetch = "<link rel=\"dns-prefetch\" href=\"//".getCDNURL()."\">\n";
+function tealiumOutputDNSPrefetch() {
+	$dnsPrefetch = "<link rel=\"dns-prefetch\" href=\"//".tealiumGetCDNURL()."\">\n";
 	echo $dnsPrefetch;
 }
 
 /*
  * Get the CDN URL based on EU setting
  */
-function getCDNURL() {
+function tealiumGetCDNURL() {
 	$tiqCDN = ( "1" == get_option( 'tealiumEUOnly' ) ? "tags-eu.tiqcdn.com" : "tags.tiqcdn.com" );
 	return $tiqCDN;
 }
@@ -540,13 +540,13 @@ function getCDNURL() {
 /*
  * Enable output buffer
  */
-function outputFilter( $template ) {
+function tealiumOutputFilter( $template ) {
 	ob_start();
 	return $template;
 }
 
 /*
- * Used in combination with outputFilter() to add Tealium tag after <body>
+ * Used in combination with tealiumOutputFilter() to add Tealium tag after <body>
  */
 function tealiumTagBody( $tealiumTagCode ) {
 	$content = ob_get_clean();
@@ -558,12 +558,12 @@ function tealiumTagBody( $tealiumTagCode ) {
 }
 
 /*
- * Used in combination with outputFilter() to add Tealium tag after <head>
+ * Used in combination with tealiumOutputFilter() to add Tealium tag after <head>
  */
 function tealiumTagHead( $tealiumTagCode ) {
 	$content = ob_get_clean();
 	$tealiumTagCode = getTealiumTagCode();
-	$tealiumDataObject = encodedDataObject( true );
+	$tealiumDataObject = tealiumEncodedDataObject( true );
 
 	// Insert Tealium tag immediately after head tag
 	$content = preg_replace( '#<head([^>]*)>#i', "<head$1>\n{$tealiumDataObject}\n{$tealiumTagCode}", $content, 1 );
@@ -590,7 +590,7 @@ function insertTealiumTag() {
 		case '3':
 			// Location - Header (Top)
 			// Start content buffer
-			add_filter( 'template_include', 'outputFilter', 1 );
+			add_filter( 'template_include', 'tealiumOutputFilter', 1 );
 			// Inject Tealium tag, output page contents
 			add_filter( 'shutdown', 'tealiumTagHead', 0 );
 			break;
@@ -598,7 +598,7 @@ function insertTealiumTag() {
 		default:
 			// Location - After opening body tag
 			// Start content buffer
-			add_filter( 'template_include', 'outputFilter', 1 );
+			add_filter( 'template_include', 'tealiumOutputFilter', 1 );
 			// Inject Tealium tag, output page contents
 			add_filter( 'shutdown', 'tealiumTagBody', 0 );
 			break;
@@ -608,13 +608,13 @@ function insertTealiumTag() {
 	// Add utag.sync.js if required
 	$utagSync = get_option( 'tealiumUtagSync' );
 	if ( "1" == $utagSync ) {
-		add_action( 'wp_head', 'outputUtagSync', 1 );
+		add_action( 'wp_head', 'tealiumOutputUtagSync', 1 );
 	}
 
 	// Add utag.sync.js if required
 	$dnsPrefetch = get_option( 'tealiumDNSPrefetch' );
 	if ( "1" == $dnsPrefetch ) {
-		add_action( 'wp_head', 'outputDNSPrefetch', 0 );
+		add_action( 'wp_head', 'tealiumOutputDNSPrefetch', 0 );
 	}
 }
 
@@ -631,7 +631,5 @@ add_action( 'init', 'insertTealiumTag' );
 
 // Insert the data object
 if ( get_option( 'tealiumTagLocation' ) != '3' ) {
-	add_action( 'wp_head', 'encodedDataObject', 2 );
+	add_action( 'wp_head', 'tealiumEncodedDataObject', 2 );
 }
-
-?>
