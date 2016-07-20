@@ -4,7 +4,7 @@ Tags: analytics, tealium, data object, data layer
 Donate link: http://tealium.com
 Requires at least: 3.0.1
 Tested up to: 4.5.3
-Stable tag: 2.1.6
+Stable tag: 2.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,15 +103,11 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 == Changelog ==
 
-= 2.1.6 =
+= 2.1.5 =
 * Fix bug where Tealium tag was served on admin pages in more recent versions of WP.
 * Make function names less generic. Thank you [arippberger](https://github.com/arippberger).
 * Fix admin message styling issue.
 * Add more order data for WooCommerce.
-
-= 2.1.5 =
-* Minor bug fixes.
-* CSS updates.
 
 = 2.1.4 =
 * Added the option to exclude Wordpress meta data.
@@ -167,11 +163,8 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 == Upgrade Notice ==
 
-= 2.1.6 =
-Prevent tags from being served on admin pages, fix admin message styling issue and add more order data for WooCommerce.
-
 = 2.1.5 =
-Fix a minor bug and admin area styling updates.
+Bug fixes, prevent tags from being served on admin pages, fix admin message styling issue and add more order data for WooCommerce.
 
 = 2.1.4 =
 Added the option to exclude Wordpress meta data.
