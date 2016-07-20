@@ -220,13 +220,13 @@ function tealiumWooCommerceData( $utagdata ) {
 
 	// Add order data
 	if ( is_order_received_page() ) {
-		$order_id  = apply_filters( 'woocommerce_thankyou_order_id', empty( $_GET['order'] ) ? ( $GLOBALS["wp"]->query_vars["order-received"] ? $GLOBALS["wp"]->query_vars["order-received"] : 0 ) : absint( $_GET['order'] ) );
-		$order_key = apply_filters( 'woocommerce_thankyou_order_key', empty( $_GET['key'] ) ? '' : woocommerce_clean( $_GET['key'] ) );
+		$orderId  = apply_filters( 'woocommerce_thankyou_order_id', empty( $_GET['order'] ) ? ( $GLOBALS["wp"]->query_vars["order-received"] ? $GLOBALS["wp"]->query_vars["order-received"] : 0 ) : absint( $_GET['order'] ) );
+		$orderKey = apply_filters( 'woocommerce_thankyou_order_key', empty( $_GET['key'] ) ? '' : woocommerce_clean( $_GET['key'] ) );
 		$orderData = array();
 
-		if ( $order_id > 0 ) {
-			$order = new WC_Order( $order_id );
-			if ( $order->order_key != $order_key ) {
+		if ( $orderId > 0 ) {
+			$order = new WC_Order( $orderId );
+			if ( $order->order_key != $orderKey ) {
 				unset( $order );
 			}
 		}
@@ -256,7 +256,7 @@ add_filter( 'tealium_wooCommerceData', 'tealiumWooCommerceData' );
 /*
  * Creates the data object as an array
  */
-function dataObject() {
+function tealiumDataObject() {
 	global $utagdata;
 	$utagdata = array();
 
@@ -355,7 +355,7 @@ function dataObject() {
  * Encodes the data object array as JSON, outputs script tag
  */
 function tealiumEncodedDataObject( $return = false ) {
-	$utagdata = dataObject();
+	$utagdata = tealiumDataObject();
 
 	// Encode data object
 	if ( version_compare( phpversion(), '5.4.0', '>=' ) ) {
@@ -366,7 +366,7 @@ function tealiumEncodedDataObject( $return = false ) {
 		$jsondata = json_encode( $utagdata );
 
 		// Apply pretty print function
-		$jsondata = prettyPrintJSON( $jsondata );
+		$jsondata = tealiumPrettyPrintJSON( $jsondata );
 	}
 
 	// Output data object
@@ -384,7 +384,7 @@ function tealiumEncodedDataObject( $return = false ) {
 /*
  * Pretty print JSON for PHP 5.3 and lower
  */
-function prettyPrintJSON( $json ) {
+function tealiumPrettyPrintJSON( $json ) {
 	$result = '';
 	$level = 0;
 	$in_quotes = false;
@@ -628,9 +628,9 @@ if ( is_admin() ) {
 else {
 	// Insert the Tealium tag
 	add_action( 'init', 'insertTealiumTag' );
-}
 
-// Insert the data object
-if ( get_option( 'tealiumTagLocation' ) != '3' ) {
-	add_action( 'wp_head', 'tealiumEncodedDataObject', 2 );
+	// Insert the data object
+	if ( get_option( 'tealiumTagLocation' ) != '3' ) {
+		add_action( 'wp_head', 'tealiumEncodedDataObject', 2 );
+	}
 }
