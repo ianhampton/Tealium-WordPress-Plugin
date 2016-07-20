@@ -625,9 +625,10 @@ if ( is_admin() ) {
 	add_action( 'admin_menu', 'admin_menu_tealium' );
 	add_action( 'admin_notices', 'admin_notices_tealium' );
 }
-
-// Insert the Tealium tag
-add_action( 'init', 'insertTealiumTag' );
+else {
+	// Insert the Tealium tag
+	add_action( 'init', 'insertTealiumTag' );
+}
 
 // Insert the data object
 if ( get_option( 'tealiumTagLocation' ) != '3' ) {
