@@ -91,9 +91,9 @@ function tealiumGenerateBulkDataSourceList() {
 ?>
 
 <div class="wrap">
-	<div class="tealium-icon">
-		<h2><?php _e( 'Tealium Settings', 'tealium' ); ?></h2>
-	</div>
+	<h1 class="tealium-icon">
+		<span class="tealium-title"><?php _e( 'Tealium Settings', 'tealium' ); ?></span>
+	</h1>
 
 	<?php $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'basic_settings'; ?>
 

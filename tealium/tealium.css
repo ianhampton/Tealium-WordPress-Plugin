@@ -1,17 +1,12 @@
-div.tealium-icon {
+h1.tealium-icon {
 	background-repeat: no-repeat;
 	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAMAAAAM7l6QAAABC1BMVEUAAAApeLMMhb8AfMMAfMIAfMIAgsIAfMIAfMIAfMIAfMYAfMIAe8EAfMIEfMAAfsKWm6GVm6EAfMKWnKEBfMOYm6CVm6EAfMMAfMOVm6Cbmp8AfMIAfMOVmqEAfMMAe8IAfMOWm6AAfMUEfMEAe8QWf78AfMUDeMWamqSVm6GVm6KVnKEAfcOVm6EAfMIAfMKVm6GTm6IAfMKVm6GUm6EAe8KTmqGVnKIAe8EAe8OVnKEAfcOkn5+Ll58AfcWFoaGVm6GVm6KVm6AAfMIAfMKcnKAAfMMAfcJ8lqYAfMIAhdGXnaMAg84AgMkAh9QAgssAfsQAf8ajqbCttLsAitigpq2boacAjNydo6ldxOLnAAAASnRSTlMAAgT+/PoJ58/AIO56ZBUP3LqbkoZWVE1BNSj1xbGjkWteOjQtKSQbEfrw4drAu7Wjoo2EenVxYltVSUciIB4N883Mq6iGc2hhVHrSSmgAAAGKSURBVCjPdZLnbuNADIRH2qJmSe497i259N5zvay6bOfu/Z/kDDhAIK0zfz+SmCGJNynoWQ5U7JaKZkxHwIe4IDozPv4QV//qE538goKdsiO7LIQBVd1R0Cr+njgaiQwAkHlluQe3Q/xzTBvPMj9bHwF6eOg2Ov6hI/GbZeX6x7hgulrAolsp/0ttuL+uAXc+pckVZHtDz7sABhGjQROAkilQUPP+XQJNP/a7KjjP+18UP7euL176ljFHwTDOHWTVfrxM0wqeOcoiCMKui+x4fPW8TwtgRGNGmbDz+MsGPwF2QgihUTW313YlTUsAHjaQMv8q09s+OKifltpwACNMYqGZGXzjrU8BU7d6fP5N07qjfO7XI45qGAtDgTnN5m6V6sXN0dAPGI1s6arD5V69dD/HH5+xoCztvP66/4RBcmKehHHYlw66KKaP0ANRdr9r+kTCuD+b4jghlokZl6mKO3I7EIw8bF3Jf77Sxscra7a1JeEG9X+qhYbcuk3J9VXvfbDMm6QKnv/B/8aVL1EkmuTxAAAAAElFTkSuQmCC');
-	background-position: 0 8px;
-	height: 40px;
-	margin-bottom: 10px;
+	background-position: 0 10px;
+	height: 35px;
 }
 
-div.tealium-icon h2 {
-	padding-top: 12px;
+h1.tealium-icon span.tealium-title {
 	padding-left: 40px;
-	margin-bottom: 8px;
-	font-size: 18pt;
-
 }
 
 table.form-table.basic th {
