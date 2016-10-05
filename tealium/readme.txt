@@ -8,7 +8,7 @@ Stable tag: 2.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Adds the Tealium tag and creates a data layer/data object for your Wordpress site.
+Adds the Tealium tag and creates a data layer/data object for your WordPress site.
 
 == Description ==
 
@@ -16,7 +16,7 @@ Adds the Tealium tag and creates a data layer/data object for your Wordpress sit
 
 Allows users to easily add the Tealium tag without editing any template files. 
 
-A data object is added to your Wordpress website containing:
+A data object is added to your WordPress website containing:
 
 * Site name
 * Site description
@@ -39,8 +39,8 @@ Tags – commonly known as tracking pixels – are becoming the data collection 
 
 To install:
 
-* Install from the Wordpress plugin repository, or copy to your wp-content/plugins folder.
-* Enable through the plugins section within Wordpress.
+* Install from the WordPress plugin repository, or copy to your wp-content/plugins folder.
+* Enable through the plugins section within WordPress.
 * Enter your account/profile/environment settings into 'Tealium Settings' under Settings in the admin menu.
 * That's it!
 
@@ -49,7 +49,7 @@ Optional steps:
 * The position of the Tealium tag can be selected.
 * If there are items you wish to exclude from your data object, add the keys as a comma separated list.
 * A cache buster can be enabled for content editors.
-* Use the data source bulk export to quickly import your Wordpress custom fields into Tealium.
+* Use the data source bulk export to quickly import your WordPress custom fields into Tealium.
 * Choose between sync/async deployments.
 
 == Frequently Asked Questions ==
@@ -82,24 +82,24 @@ Version 1.3 adds basic support for cart contents information in the data object.
 
 This can be achieved calling the 'tealium_addToDataObject' action from your themes functions.php file or a separate plugin.
 
-For more information see the [action examples on GitHub](https://github.com/ianhampton/Tealium-Wordpress-Plugin#action-examples).
+For more information see the [action examples on GitHub](https://github.com/ianhampton/Tealium-WordPress-Plugin#action-examples).
 
 = Can I automatically switch between Tealium environments on my dev/live website? =
 
 This can be achieved by conditionally modifying the Tealium tag code by calling the 'tealium_tagCode' action from your themes functions.php file or a separate plugin.
 
-For more information see the [action examples on GitHub](https://github.com/ianhampton/Tealium-Wordpress-Plugin#action-examples).
+For more information see the [action examples on GitHub](https://github.com/ianhampton/Tealium-WordPress-Plugin#action-examples).
 
 == Screenshots ==
 
-1. The Tealium plugin allows your Tealium tag to be added straight to your site from your Wordpress dashboard.
+1. The Tealium plugin allows your Tealium tag to be added straight to your site from your WordPress dashboard.
 2. A data object is added to your site containing basic post or page data.
 3. The plugin also takes categories and tags...
 4. ...and rolls them into the data object.
 5. Custom fields and other meta data is also supported.
-6. Many existing Wordpress plugins make use of meta data, so your data object should be rich with potential data sources.
+6. Many existing WordPress plugins make use of meta data, so your data object should be rich with potential data sources.
 7. Advanced settings allow a number of options to be configured and features enabled.
-8. The bulk export feature allows you to quickly import your Wordpress data sources into Tealium.
+8. The bulk export feature allows you to quickly import your WordPress data sources into Tealium.
 
 == Changelog ==
 
@@ -110,7 +110,7 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 * Add more order data for WooCommerce.
 
 = 2.1.4 =
-* Added the option to exclude Wordpress meta data.
+* Added the option to exclude WordPress meta data.
 
 = 2.1.3 =
 * Add tag and category archive specific page types and post titles.
@@ -167,7 +167,7 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 Bug fixes, prevent tags from being served on admin pages, fix admin message styling issue and add more order data for WooCommerce.
 
 = 2.1.4 =
-Added the option to exclude Wordpress meta data.
+Added the option to exclude WordPress meta data.
 
 = 2.1.3 =
 Add tag and category archive specific page types and post titles.
