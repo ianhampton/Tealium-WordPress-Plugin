@@ -250,7 +250,7 @@ function tealiumGenerateBulkDataSourceList() {
 	else {
 		?>
 		<p>
-			<p class="description"><?php _e( 'Bulk export of basic variables and all valid custom fields. Copy and paste into the \'Bulk Import from CSV\' option under Data Layer in Tealium IQ.', 'tealium' ); ?></p>
+			<p class="description"><?php _e( 'Bulk export of basic variables from all valid custom fields. Copy and paste into the \'Bulk Import from CSV\' option under Data Layer in Tealium IQ.', 'tealium' ); ?></p>
 			<p><textarea readonly="readonly" name="csvExport" rows="20" cols="90"><?php echo tealiumGenerateBulkDataSourceList() ?></textarea></p>
 		</p>
 		<?php
