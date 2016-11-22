@@ -82,7 +82,7 @@ function tealiumGenerateBulkDataSourceList() {
 
 	if ( $dataLayer ) {
 		foreach ( $dataLayer as $key => $value ) {
-			$output .= $key . ', "'. $UDOString .'", "'. $value .'", "'. tealiumFormatAsName( $key ) .'"&#13;&#10;';
+			$output .= $key . ', "'. $UDOString .'", "'. tealiumFormatAsName( $key ) .'", "'. $value .'"&#13;&#10;';
 		}
 	}
 

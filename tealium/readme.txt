@@ -105,6 +105,7 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 = 2.1.6 =
 * Switch from 'Data Sources' to 'Variables' to align with TiQ. 
+* Update the order that notes and aliases appear in bulk export.
 
 = 2.1.5 =
 * Fix bug where Tealium tag was served on admin pages in more recent versions of WP.
@@ -167,7 +168,8 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 == Upgrade Notice ==
 
 = 2.1.6 =
-Switch from 'Data Sources' to 'Variables' to align with TiQ. 
+Switch from 'Data Sources' to 'Variables' to align with TiQ.
+Update the order that notes and aliases appear in bulk export.
 
 = 2.1.5 =
 Bug fixes, prevent tags from being served on admin pages, fix admin message styling issue and add more order data for WooCommerce.
