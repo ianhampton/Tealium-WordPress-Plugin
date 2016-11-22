@@ -1,11 +1,11 @@
-Tealium Wordpress Plugin
+Tealium WordPress Plugin
 ========================
 
 To install:
 
-* Install from the Wordpress plugin repository, or copy to your wp-content/plugins folder.
-* Enable through the plugins section within Wordpress.
-* Paste your Tealium code into 'Tealium Settings' under Settings in Wordpress and save.
+* Install from the WordPress plugin repository, or copy to your wp-content/plugins folder.
+* Enable through the plugins section within WordPress.
+* Paste your Tealium code into 'Tealium Settings' under Settings in WordPress and save.
 * That's it!
 
 Optional steps:

@@ -34,7 +34,7 @@ function tealiumGenerateBulkDataSourceList() {
 	$output = '';
 
 	$UDOString = 'UDO Variable';
-	$bulkString = "Imported from Wordpress";
+	$bulkString = "Imported from WordPress";
 
 	// Array of basic data sources
 	$basicLayer = array(
@@ -195,7 +195,7 @@ function tealiumGenerateBulkDataSourceList() {
 					<td>
 						<label for="tealiumExcludeMetaData">
 							<input type="checkbox" name="tealiumExcludeMetaData" id="tealiumExcludeMetaData" value="1"<?php checked( 1 == get_option( 'tealiumExcludeMetaData' ) ); ?> />
-							<?php _e( 'Remove ALL Wordpress meta data from data layer', 'tealium' ); ?>
+							<?php _e( 'Remove ALL WordPress meta data from data layer', 'tealium' ); ?>
 						</label>
 					</td>
 				</tr>
