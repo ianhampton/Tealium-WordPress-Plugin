@@ -3,8 +3,8 @@ Contributors: tealium
 Tags: analytics, tealium, data object, data layer
 Donate link: http://tealium.com
 Requires at least: 3.0.1
-Tested up to: 4.5.3
-Stable tag: 2.1.5
+Tested up to: 4.6.1
+Stable tag: 2.1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,7 @@ Adds the Tealium tag and creates a data layer/data object for your WordPress sit
 
 Allows users to easily add the Tealium tag without editing any template files. 
 
-A data object is added to your WordPress website containing:
+A data layer is added to your WordPress website containing:
 
 * Site name
 * Site description
@@ -49,7 +49,7 @@ Optional steps:
 * The position of the Tealium tag can be selected.
 * If there are items you wish to exclude from your data object, add the keys as a comma separated list.
 * A cache buster can be enabled for content editors.
-* Use the data source bulk export to quickly import your WordPress custom fields into Tealium.
+* Use the variable bulk export to quickly import your WordPress custom fields into Tealium.
 * Choose between sync/async deployments.
 
 == Frequently Asked Questions ==
@@ -97,11 +97,14 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 3. The plugin also takes categories and tags...
 4. ...and rolls them into the data object.
 5. Custom fields and other meta data is also supported.
-6. Many existing WordPress plugins make use of meta data, so your data object should be rich with potential data sources.
+6. Many existing WordPress plugins make use of meta data, so your data object should be rich with potential variables.
 7. Advanced settings allow a number of options to be configured and features enabled.
-8. The bulk export feature allows you to quickly import your WordPress data sources into Tealium.
+8. The bulk export feature allows you to quickly import your WordPress variables into Tealium.
 
 == Changelog ==
+
+= 2.1.6 =
+* Switch from 'Data Sources' to 'Variables' to align with TiQ. 
 
 = 2.1.5 =
 * Fix bug where Tealium tag was served on admin pages in more recent versions of WP.
@@ -121,7 +124,7 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 = 2.1.1 =
 * Added pretty printing of JSON object for older versions of PHP.
-* Add name parameter on bulk data source export.
+* Add name parameter on bulk variable export.
 
 = 2.1 =
 * Added DNS Prefetching option
@@ -163,6 +166,9 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 == Upgrade Notice ==
 
+= 2.1.6 =
+Switch from 'Data Sources' to 'Variables' to align with TiQ. 
+
 = 2.1.5 =
 Bug fixes, prevent tags from being served on admin pages, fix admin message styling issue and add more order data for WooCommerce.
 
@@ -178,7 +184,7 @@ Change name parameter location to match TiQ update.
 
 = 2.1.1 =
 Added pretty printing of JSON object for older versions of PHP.
-Add name parameter on bulk data source export.
+Add name parameter on bulk variable export.
 
 = 2.1 =
 Added DNS prefetching option.

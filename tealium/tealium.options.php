@@ -29,14 +29,14 @@ function tealiumFormatAsName( $key ) {
 	return $key;
 }
 
-// Create an exhaustive list of possible data sources
+// Create an exhaustive list of possible variables
 function tealiumGenerateBulkDataSourceList() {
 	$output = '';
 
 	$UDOString = 'UDO Variable';
 	$bulkString = "Imported from WordPress";
 
-	// Array of basic data sources
+	// Array of basic variables
 	$basicLayer = array(
 		"siteName" => "Contains the site's name",
 		"siteDescription" => "Contains the site's description",
@@ -100,7 +100,7 @@ function tealiumGenerateBulkDataSourceList() {
 	<h2 class="nav-tab-wrapper">
     	<a href="?page=tealium&tab=basic_settings" class="nav-tab <?php echo $active_tab == 'basic_settings' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Basic Settings', 'tealium' ); ?></a>
     	<a href="?page=tealium&tab=advanced_settings" class="nav-tab <?php echo $active_tab == 'advanced_settings' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Advanced Settings', 'tealium' ); ?></a>
-    	<a href="?page=tealium&tab=data_export" class="nav-tab <?php echo $active_tab == 'data_export' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Data Source Bulk Export', 'tealium' ); ?></a>
+    	<a href="?page=tealium&tab=data_export" class="nav-tab <?php echo $active_tab == 'data_export' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Variable Bulk Export', 'tealium' ); ?></a>
 	</h2>
 
 	<?php
@@ -250,7 +250,7 @@ function tealiumGenerateBulkDataSourceList() {
 	else {
 		?>
 		<p>
-			<p class="description"><?php _e( 'Bulk export of basic data sources and all valid custom fields. Copy and paste into the \'Bulk Import from CSV\' option under Data Layer in Tealium IQ.', 'tealium' ); ?></p>
+			<p class="description"><?php _e( 'Bulk export of basic variables and all valid custom fields. Copy and paste into the \'Bulk Import from CSV\' option under Data Layer in Tealium IQ.', 'tealium' ); ?></p>
 			<p><textarea readonly="readonly" name="csvExport" rows="20" cols="90"><?php echo tealiumGenerateBulkDataSourceList() ?></textarea></p>
 		</p>
 		<?php

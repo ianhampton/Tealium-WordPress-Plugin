@@ -10,8 +10,11 @@ To install:
 
 Optional steps:
 
+* utag.sync.js support.
 * The position of the Tealium tag can be selected.
 * If there are items you wish to exclude from your data object, add the keys as a comma separated list.
+* TiQ cache busting for content editors.
+* Enable DNS prefetching.
 
 Action examples
 ---------------
