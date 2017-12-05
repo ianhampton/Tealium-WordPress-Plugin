@@ -1,10 +1,10 @@
 === Plugin Name ===
 Contributors: tealium
-Tags: analytics, tealium, data object, data layer
+Tags: tag management, tag manager, tealium, data object, data layer, analytics
 Donate link: http://tealium.com
 Requires at least: 3.0.1
-Tested up to: 4.6.1
-Stable tag: 2.1.6
+Tested up to: 4.9.1
+Stable tag: 2.1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,6 +103,9 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 == Changelog ==
 
+= 2.1.7 =
+* Improve search result count performance.
+
 = 2.1.6 =
 * Switch from 'Data Sources' to 'Variables' to align with TiQ. 
 * Update the order that notes and aliases appear in bulk export.
@@ -166,6 +169,9 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.1.7 =
+Improve search result count performance.
 
 = 2.1.6 =
 Switch from 'Data Sources' to 'Variables' to align with TiQ.
