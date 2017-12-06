@@ -3,7 +3,7 @@
 Plugin Name: Tealium
 Plugin URI: http://tealium.com
 Description: Adds the Tealium tag and creates a data layer for your WordPress site.
-Version: 2.1.7
+Version: 2.1.8
 Author: Ian Hampton - Tealium EMEA
 Author URI: http://tealium.com
 Text Domain: tealium
@@ -199,10 +199,9 @@ function tealiumWooCommerceData( $utagdata ) {
 		// Get cart product IDs, SKUs, Titles etc.
 		foreach ( $woocart['cart_contents'] as $cartItem ) {
 			$productMeta = new WC_Product( $cartItem['product_id'] );
-
 			$productData['product_id'][] = $cartItem['product_id'];
 			$productData['product_sku'][] = $productMeta->post->sku;
-			$productData['product_name'][] = $productMeta->post->post->post_title;
+			$productData['product_name'][] = $productMeta->post->post_title;
 			$productData['product_quantity'][] = $cartItem['quantity'];
 			$productData['product_regular_price'][] = get_post_meta( $cartItem['product_id'], '_regular_price', true );
 			$productData['product_sale_price'][] = get_post_meta( $cartItem['product_id'], '_sale_price', true );
@@ -322,7 +321,7 @@ function tealiumDataObject() {
 			
 			// Collect search and result data
 			$searchQuery = get_search_query();
-			$searchCount = $wp_query->post_count;
+			$searchCount = $wp_query->found_posts;
 
 			// Add to udo
 			$utagdata['pageType'] = "search";
@@ -368,9 +367,9 @@ function tealiumEncodedDataObject( $return = false ) {
 		// Apply pretty print function
 		$jsondata = tealiumPrettyPrintJSON( $jsondata );
 	}
-
+	
 	// Output data object
-	if ( json_decode( $jsondata ) !== null ) {
+	if ( json_decode( str_replace("\u0000*\u0000", "", $jsondata) ) !== null ) {
 		$utag_data = "<script type=\"text/javascript\">\nvar utag_data = {$jsondata};\n</script>\n";
 		if ( !$return ) {
 			echo $utag_data;
