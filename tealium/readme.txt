@@ -4,7 +4,7 @@ Tags: tag management, tag manager, tealium, data object, data layer, analytics
 Donate link: http://tealium.com
 Requires at least: 3.0.1
 Tested up to: 4.9.1
-Stable tag: 2.1.7
+Stable tag: 2.1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,6 +103,9 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 == Changelog ==
 
+= 2.1.8 =
+* Fix issues with WooCommerce support.
+
 = 2.1.7 =
 * Improve search result count performance.
 
@@ -169,6 +172,9 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.1.8 =
+Fix issues with WooCommerce support.
 
 = 2.1.7 =
 Improve search result count performance.
