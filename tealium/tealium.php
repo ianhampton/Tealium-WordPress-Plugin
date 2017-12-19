@@ -170,13 +170,12 @@ function tealiumConvertCamelCase( $utagdata, $arrayHolder = array() ) {
 		$newKey = ltrim( $newKey, '_' );
 		if ( !is_array( $val ) ) {
 			$underscoreArray[$newKey] = $val;
+		} else if ( isset( $underscoreArray[$newKey] ) ) {
+			$underscoreArray[$newKey] = tealiumConvertCamelCase( $val, $underscoreArray[$newKey] );
+		} else if ( isset( $underscoreArray[$key] ) ) {
+			$underscoreArray[$newKey] = tealiumConvertCamelCase( $val, $underscoreArray[$key] );
 		} else {
-			if ( array_key_exists( $newKey, $underscoreArray ) ) {
-				$underscoreArray[$newKey] = tealiumConvertCamelCase( $val, $underscoreArray[$newKey] );
-			}
-			else {
-				$underscoreArray[$newKey] = tealiumConvertCamelCase( $val, $underscoreArray[$key] );
-			}
+			$underscoreArray[$newKey] = $val;
 		}
 	}
 	return $underscoreArray;
