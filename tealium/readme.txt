@@ -105,6 +105,7 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 = 2.1.8 =
 * Fix issues with WooCommerce support.
+* Bug fix with key name conversion. Thank you [mikeschinkel](https://github.com/mikeschinkel).
 
 = 2.1.7 =
 * Improve search result count performance.
@@ -175,6 +176,7 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 = 2.1.8 =
 Fix issues with WooCommerce support.
+Bug fix with key name conversion.
 
 = 2.1.7 =
 Improve search result count performance.
