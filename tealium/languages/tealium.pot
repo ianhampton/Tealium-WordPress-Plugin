@@ -1,0 +1,208 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: Tealium\n"
+"POT-Creation-Date: 2018-03-08 05:39-0800\n"
+"PO-Revision-Date: 2018-03-08 05:39-0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: tealium.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: tealium.options.php:95 tealium.php:74
+msgid "Tealium Settings"
+msgstr ""
+
+#: tealium.options.php:101
+msgid "Basic Settings"
+msgstr ""
+
+#: tealium.options.php:102
+msgid "Advanced Settings"
+msgstr ""
+
+#: tealium.options.php:103
+msgid "Variable Bulk Export"
+msgstr ""
+
+#: tealium.options.php:115
+msgid "Account"
+msgstr ""
+
+#: tealium.options.php:118
+msgid "For example: <code>companyname</code>"
+msgstr ""
+
+#: tealium.options.php:122
+msgid "Profile"
+msgstr ""
+
+#: tealium.options.php:125
+msgid "For example: <code>main</code>"
+msgstr ""
+
+#: tealium.options.php:129
+msgid "Environment"
+msgstr ""
+
+#: tealium.options.php:132
+msgid "For example: <code>prod</code>"
+msgstr ""
+
+#: tealium.options.php:139 tealium.options.php:246
+msgid "Save Changes"
+msgstr ""
+
+#: tealium.options.php:151
+msgid "Tag location"
+msgstr ""
+
+#: tealium.options.php:155
+msgid "After opening body tag (recommended)"
+msgstr ""
+
+#: tealium.options.php:156
+msgid "Header - Before closing head tag"
+msgstr ""
+
+#: tealium.options.php:157
+msgid "Footer - Before closing body tag"
+msgstr ""
+
+#: tealium.options.php:158
+msgid "Immediately after opening head tag"
+msgstr ""
+
+#: tealium.options.php:164
+msgid "Tag type"
+msgstr ""
+
+#: tealium.options.php:168
+msgid "Asynchronous (recommended)"
+msgstr ""
+
+#: tealium.options.php:169
+msgid "Synchronous"
+msgstr ""
+
+#: tealium.options.php:175
+msgid "Data layer style"
+msgstr ""
+
+#: tealium.options.php:179
+msgid "CamelCase (legacy)"
+msgstr ""
+
+#: tealium.options.php:180
+msgid "Underscore (recommended)"
+msgstr ""
+
+#: tealium.options.php:183
+msgid ""
+"CamelCase = <code>postDate, siteName</code> Underscore = <code>post_date, "
+"site_name</code>"
+msgstr ""
+
+#: tealium.options.php:187
+msgid "Data layer exclusions"
+msgstr ""
+
+#: tealium.options.php:190
+msgid "Comma separated list, e.g. <code>postDate, custom_field_1</code>"
+msgstr ""
+
+#: tealium.options.php:194
+msgid "Exclude meta data"
+msgstr ""
+
+#: tealium.options.php:198
+msgid "Remove ALL WordPress meta data from data layer"
+msgstr ""
+
+#: tealium.options.php:203
+msgid "Synchronous file"
+msgstr ""
+
+#: tealium.options.php:207
+msgid "This profile uses a utag.sync.js file"
+msgstr ""
+
+#: tealium.options.php:212
+msgid "Cache buster"
+msgstr ""
+
+#: tealium.options.php:216
+msgid "Add a cache buster for content editors"
+msgstr ""
+
+#: tealium.options.php:221
+msgid "DNS prefetching"
+msgstr ""
+
+#: tealium.options.php:225
+msgid "Enable DNS Prefetching"
+msgstr ""
+
+#: tealium.options.php:230
+msgid "EU only"
+msgstr ""
+
+#: tealium.options.php:234
+msgid "Only use EU based CDN nodes"
+msgstr ""
+
+#: tealium.options.php:240
+msgid "Advanced Tag Code"
+msgstr ""
+
+#: tealium.options.php:241
+msgid ""
+"Optional: Tealium tag code pasted below will be used instead of any account/"
+"profile/environment values entered under Basic Settings."
+msgstr ""
+
+#: tealium.options.php:253
+msgid ""
+"Bulk export of basic variables from all valid custom fields. Copy and paste "
+"into the 'Bulk Import from CSV' option under Data Layer in Tealium IQ."
+msgstr ""
+
+#: tealium.php:74
+msgid "Tealium Tag Settings"
+msgstr ""
+
+#: tealium.php:107
+#, php-format
+msgid ""
+"Please enter your Tealium account details or tag code <a href=\"%s\">over "
+"here &raquo;</a>"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Tealium"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+#. Author URI of the plugin/theme
+msgid "http://tealium.com"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Adds the Tealium tag and creates a data layer for your WordPress site."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Ian Hampton - Tealium EMEA"
+msgstr ""

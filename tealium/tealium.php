@@ -3,10 +3,11 @@
 Plugin Name: Tealium
 Plugin URI: http://tealium.com
 Description: Adds the Tealium tag and creates a data layer for your WordPress site.
-Version: 2.1.8
+Version: 2.1.9
 Author: Ian Hampton - Tealium EMEA
 Author URI: http://tealium.com
 Text Domain: tealium
+Domain Path: /languages
 */
 
 function activate_tealium() {
@@ -82,6 +83,10 @@ function admin_styles_tealium() {
 	wp_enqueue_style( 'tealium-stylesheet' );
 }
 
+function load_plugin_textdomain_tealium() {
+    load_plugin_textdomain( 'tealium', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
+}
+add_action( 'plugins_loaded', 'load_plugin_textdomain_tealium' );
 
 /*
  * Admin messages
