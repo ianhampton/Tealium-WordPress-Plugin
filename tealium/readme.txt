@@ -105,6 +105,7 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 = 2.1.9 =
 * Add translation support and template.
+* Move data layer above sync file.
 
 = 2.1.8 =
 * Fix issues with WooCommerce support.
@@ -179,6 +180,7 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 = 2.1.9 =
 Add translation support and template.
+Move data layer above sync file.
 
 = 2.1.8 =
 Fix issues with WooCommerce support.

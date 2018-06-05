@@ -611,10 +611,10 @@ function insertTealiumTag() {
 	// Add utag.sync.js if required
 	$utagSync = get_option( 'tealiumUtagSync' );
 	if ( "1" == $utagSync ) {
-		add_action( 'wp_head', 'tealiumOutputUtagSync', 1 );
+		add_action( 'wp_head', 'tealiumOutputUtagSync', 2 );
 	}
 
-	// Add utag.sync.js if required
+	// Add DNS Prefetch if required
 	$dnsPrefetch = get_option( 'tealiumDNSPrefetch' );
 	if ( "1" == $dnsPrefetch ) {
 		add_action( 'wp_head', 'tealiumOutputDNSPrefetch', 0 );
@@ -634,6 +634,6 @@ else {
 
 	// Insert the data object
 	if ( get_option( 'tealiumTagLocation' ) != '3' ) {
-		add_action( 'wp_head', 'tealiumEncodedDataObject', 2 );
+		add_action( 'wp_head', 'tealiumEncodedDataObject', 1 );
 	}
 }
