@@ -235,6 +235,13 @@ function tealiumGenerateBulkDataSourceList() {
 						</label>
 					</td>
 				</tr>
+				<tr>
+					<th scope="row"><label for="tealiumNamespace"><?php _e( 'Custom namespace', 'tealium' ); ?></label></th>
+					<td>
+						<input name='tealiumNamespace' id='tealiumNamespace' size='50' type='text' value='<?php echo get_option( 'tealiumNamespace' ); ?>' class='regular-text' />
+						<p class="description"><?php _e( 'Use a custom namespace for the data layer instead of the default <code>utag_data</code>', 'tealium' ); ?></p>
+					</td>
+				</tr>
 			</table>
 
 			<h3 class="advanced"><label for="tealiumTagCode"><?php _e( 'Advanced Tag Code', 'tealium' ); ?></label></h3>

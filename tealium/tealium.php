@@ -3,7 +3,7 @@
 Plugin Name: Tealium
 Plugin URI: http://tealium.com
 Description: Adds the Tealium tag and creates a data layer for your WordPress site.
-Version: 2.1.9
+Version: 2.1.10
 Author: Ian Hampton - Tealium EMEA
 Author URI: http://tealium.com
 Text Domain: tealium
@@ -33,6 +33,7 @@ function activate_tealium() {
 	add_option( 'tealiumDNSPrefetch', '1' );
 	add_option( 'tealiumEUOnly', '' );
 	add_option( 'tealiumExcludeMetaData', '' );
+	add_option( 'tealiumNamespace', '' );
 }
 
 function deactive_tealium() {
@@ -50,6 +51,7 @@ function deactive_tealium() {
 	delete_option( 'tealiumDNSPrefetch' );
 	delete_option( 'tealiumEUOnly' );
 	delete_option( 'tealiumExcludeMetaData' );
+	delete_option( 'tealiumNamespace' );
 }
 
 function admin_init_tealium() {
@@ -66,6 +68,7 @@ function admin_init_tealium() {
 	register_setting( 'tealiumTagAdvanced', 'tealiumDNSPrefetch' );
 	register_setting( 'tealiumTagAdvanced', 'tealiumEUOnly' );
 	register_setting( 'tealiumTagAdvanced', 'tealiumExcludeMetaData' );
+	register_setting( 'tealiumTagAdvanced', 'tealiumNamespace' );
 
 	wp_register_style( 'tealium-stylesheet', plugins_url( 'tealium.css', __FILE__ ) );
 }
@@ -374,7 +377,12 @@ function tealiumEncodedDataObject( $return = false ) {
 	
 	// Output data object
 	if ( json_decode( str_replace("\u0000*\u0000", "", $jsondata) ) !== null ) {
-		$utag_data = "<script type=\"text/javascript\">\nvar utag_data = {$jsondata};\n</script>\n";
+		
+		// Get custom namespace value if set
+		$tealiumNamespace = get_option( 'tealiumNamespace' , 'utag_data' );
+		$tealiumNamespace = ( empty( $tealiumNamespace ) ? 'utag_data' : $tealiumNamespace );
+		
+		$utag_data = "<script type=\"text/javascript\">\nvar {$tealiumNamespace} = {$jsondata};\n</script>\n";
 		if ( !$return ) {
 			echo $utag_data;
 		}
@@ -539,6 +547,21 @@ function tealiumGetCDNURL() {
 	return $tiqCDN;
 }
 
+/*
+ * Determine if the current page is using AMP
+ */
+function tealiumAMP() {
+	if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+		return true;
+	}
+	else {
+		if ( ( defined( 'AMPFORWP_VERSION' ) || defined( 'AMP__VERSION' ) ) && preg_match( '/\/amp\/?$/', $_SERVER['REQUEST_URI'] ) ) {
+			return true;
+		}
+		return false;
+	}
+}
+
 
 /*
  * Enable output buffer
@@ -629,8 +652,10 @@ if ( is_admin() ) {
 	add_action( 'admin_notices', 'admin_notices_tealium' );
 }
 else {
-	// Insert the Tealium tag
-	add_action( 'init', 'insertTealiumTag' );
+	if ( !tealiumAMP() ) {
+		// Insert the Tealium tag
+		add_action( 'init', 'insertTealiumTag' );
+	}
 
 	// Insert the data object
 	if ( get_option( 'tealiumTagLocation' ) != '3' ) {

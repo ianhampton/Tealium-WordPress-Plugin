@@ -3,8 +3,8 @@ Contributors: tealium
 Tags: tag management, tag manager, tealium, data object, data layer, analytics
 Donate link: http://tealium.com
 Requires at least: 3.0.1
-Tested up to: 4.9.6
-Stable tag: 2.1.9
+Tested up to: 4.9.8
+Stable tag: 2.1.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -103,6 +103,10 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 == Changelog ==
 
+= 2.1.10 =
+* Add support for alternative utag_data namespace.
+* Fix issue with tag injection despite AMP.
+
 = 2.1.9 =
 * Add translation support and template.
 * Move data layer above sync file.
@@ -177,6 +181,10 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.1.10 =
+Add support for alternative utag_data namespace.
+Fix issue with tag injection despite AMP.
 
 = 2.1.9 =
 Add translation support and template.
