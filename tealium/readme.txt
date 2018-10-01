@@ -104,7 +104,7 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 == Changelog ==
 
 = 2.1.11 =
-* AMP Bugfix.
+* AMP bug fix. Workaround for a bug in a 3rd-party AMP plugin.
 
 = 2.1.10 =
 * Add support for alternative utag_data namespace.
@@ -186,7 +186,7 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 == Upgrade Notice ==
 
 = 2.1.11 =
-AMP Bugfix.
+AMP bug fix. Workaround for a bug in a 3rd-party AMP plugin.
 
 = 2.1.10 =
 Add support for alternative utag_data namespace.
