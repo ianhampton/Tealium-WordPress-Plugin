@@ -103,6 +103,9 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 == Changelog ==
 
+= 2.1.11 =
+* AMP Bugfix.
+
 = 2.1.10 =
 * Add support for alternative utag_data namespace.
 * Fix issue with tag injection despite AMP.
@@ -181,6 +184,9 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.1.11 =
+AMP Bugfix.
 
 = 2.1.10 =
 Add support for alternative utag_data namespace.

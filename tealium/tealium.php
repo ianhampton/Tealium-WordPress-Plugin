@@ -3,7 +3,7 @@
 Plugin Name: Tealium
 Plugin URI: http://tealium.com
 Description: Adds the Tealium tag and creates a data layer for your WordPress site.
-Version: 2.1.10
+Version: 2.1.11
 Author: Ian Hampton - Tealium EMEA
 Author URI: http://tealium.com
 Text Domain: tealium
@@ -551,7 +551,8 @@ function tealiumGetCDNURL() {
  * Determine if the current page is using AMP
  */
 function tealiumAMP() {
-	if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+	global $wp_query;
+	if ( function_exists( 'is_amp_endpoint' ) && $wp_query !== null && is_amp_endpoint() ) {
 		return true;
 	}
 	else {
