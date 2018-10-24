@@ -3,8 +3,8 @@ Contributors: tealium
 Tags: tag management, tag manager, tealium, data object, data layer, analytics
 Donate link: http://tealium.com
 Requires at least: 3.0.1
-Tested up to: 4.9.8
-Stable tag: 2.1.11
+Tested up to: 5.0
+Stable tag: 2.1.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,6 +20,7 @@ A data layer is added to your WordPress website containing:
 
 * Site name
 * Site description
+* Post ID
 * Post date
 * Post categories
 * Post tags
@@ -58,6 +59,7 @@ Optional steps:
 
 * Site name
 * Site description
+* Post ID
 * Post date
 * Post categories
 * Post tags
@@ -102,6 +104,9 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 8. The bulk export feature allows you to quickly import your WordPress variables into Tealium.
 
 == Changelog ==
+
+= 2.1.12 =
+* Add post ID to data layer.
 
 = 2.1.11 =
 * AMP bug fix. Workaround for a bug in a 3rd-party AMP plugin.
@@ -184,6 +189,9 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.1.12 =
+Add post ID to data layer.
 
 = 2.1.11 =
 AMP bug fix. Workaround for a bug in a 3rd-party AMP plugin.
