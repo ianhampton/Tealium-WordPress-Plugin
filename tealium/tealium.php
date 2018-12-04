@@ -3,7 +3,7 @@
 Plugin Name: Tealium
 Plugin URI: http://tealium.com
 Description: Adds the Tealium tag and creates a data layer for your WordPress site.
-Version: 2.1.12
+Version: 2.1.13
 Author: Ian Hampton - Tealium EMEA
 Author URI: http://tealium.com
 Text Domain: tealium
@@ -205,14 +205,18 @@ function tealiumWooCommerceData( $utagdata ) {
 
 		// Get cart product IDs, SKUs, Titles etc.
 		foreach ( $woocart['cart_contents'] as $cartItem ) {
-			$productMeta = new WC_Product( $cartItem['product_id'] );
+			$productMeta = wc_get_product( $cartItem['product_id'] );
 			$productData['product_id'][] = $cartItem['product_id'];
-			$productData['product_sku'][] = $productMeta->post->sku;
-			$productData['product_name'][] = $productMeta->post->post_title;
+			$productData['product_sku'][] = $productMeta->get_sku();
+			$productData['product_name'][] = $productMeta->get_title();
 			$productData['product_quantity'][] = $cartItem['quantity'];
-			$productData['product_regular_price'][] = get_post_meta( $cartItem['product_id'], '_regular_price', true );
-			$productData['product_sale_price'][] = get_post_meta( $cartItem['product_id'], '_sale_price', true );
-			$productData['product_type'][] = $productMeta->post->product_type;
+			$productData['product_regular_price'][] = $productMeta->get_regular_price();
+			$productData['product_sale_price'][] = $productMeta->get_sale_price();
+			$productData['product_price'][] = $productMeta->get_price();
+			$productData['product_type'][] = $productMeta->get_type();
+			$productData['product_categories'][] = implode( "," , $productMeta->get_category_ids() );
+			$productData['product_stock_status'][] = $productMeta->get_stock_status();
+			$productData['product_slug'][] = $productMeta->get_slug();
 		}
 	}
 
