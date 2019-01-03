@@ -190,7 +190,6 @@ function tealiumConvertCamelCase( $utagdata, $arrayHolder = array() ) {
 }
 add_filter( 'tealium_convertCamelCase', 'tealiumConvertCamelCase' );
 
-
 /*
  * Adds WooCommerce data to data layer
  */
@@ -206,17 +205,24 @@ function tealiumWooCommerceData( $utagdata ) {
 		// Get cart product IDs, SKUs, Titles etc.
 		foreach ( $woocart['cart_contents'] as $cartItem ) {
 			$productMeta = wc_get_product( $cartItem['product_id'] );
-			$productData['product_id'][] = $cartItem['product_id'];
-			$productData['product_sku'][] = $productMeta->get_sku();
-			$productData['product_name'][] = $productMeta->get_title();
-			$productData['product_quantity'][] = $cartItem['quantity'];
-			$productData['product_regular_price'][] = $productMeta->get_regular_price();
-			$productData['product_sale_price'][] = $productMeta->get_sale_price();
-			$productData['product_price'][] = $productMeta->get_price();
-			$productData['product_type'][] = $productMeta->get_type();
-			$productData['product_categories'][] = implode( "," , $productMeta->get_category_ids() );
-			$productData['product_stock_status'][] = $productMeta->get_stock_status();
-			$productData['product_slug'][] = $productMeta->get_slug();
+			$productData['cart_product_id'][] = $cartItem['product_id'];
+			$productData['cart_product_sku'][] = $productMeta->get_sku();
+			$productData['cart_product_name'][] = $productMeta->get_title();
+			$productData['cart_product_quantity'][] = $cartItem['quantity'];
+			$productData['cart_product_regular_price'][] = $productMeta->get_regular_price();
+			$productData['cart_product_sale_price'][] = $productMeta->get_sale_price();
+			$productData['cart_product_price'][] = $productMeta->get_price();
+			$productData['cart_product_type'][] = $productMeta->get_type();
+			$productData['cart_product_stock_status'][] = $productMeta->get_stock_status();
+			$productData['cart_product_slug'][] = $productMeta->get_slug();
+			$productData['cart_product_category_id'][] = implode( "," , $productMeta->get_category_ids() );
+			
+			$categoryData = array();
+			foreach ($productMeta->get_category_ids() as $category) {
+				$term = get_term_by('id', $category, 'product_cat', 'ARRAY_A');
+				$categoryData[] = $term['slug'];
+			}
+			$productData['cart_product_category_slug'][] = implode( "," , $categoryData );
 		}
 	}
 
@@ -231,12 +237,12 @@ function tealiumWooCommerceData( $utagdata ) {
 	// Add order data
 	if ( is_order_received_page() ) {
 		$orderId  = apply_filters( 'woocommerce_thankyou_order_id', empty( $_GET['order'] ) ? ( $GLOBALS["wp"]->query_vars["order-received"] ? $GLOBALS["wp"]->query_vars["order-received"] : 0 ) : absint( $_GET['order'] ) );
-		$orderKey = apply_filters( 'woocommerce_thankyou_order_key', empty( $_GET['key'] ) ? '' : woocommerce_clean( $_GET['key'] ) );
+		$orderKey = apply_filters( 'woocommerce_thankyou_order_key', empty( $_GET['key'] ) ? '' : wc_clean( $_GET['key'] ) );
 		$orderData = array();
 
 		if ( $orderId > 0 ) {
 			$order = new WC_Order( $orderId );
-			if ( $order->order_key != $orderKey ) {
+			if ( $order->get_order_key() != $orderKey ) {
 				unset( $order );
 			}
 		}
@@ -246,14 +252,41 @@ function tealiumWooCommerceData( $utagdata ) {
 			$orderData["order_total"]  = $order->get_total();
 			$orderData["order_shipping"] = $order->get_total_shipping();
 			$orderData["order_tax"] = $order->get_total_tax();
-			$orderData["order_payment_type"] = $order->payment_method_title;
+			$orderData["order_payment_type"] = $order->get_payment_method_title();
 			$orderData["order_shipping_type"] = $order->get_shipping_method();
 			$orderData["order_coupon_code"] = implode( ", ", $order->get_used_coupons() );
 		}
+		
+		$orderProducts = $order->get_items();
+		foreach( $orderProducts as $product ) {
+        	$orderData['order_product_name'][] = $product['name'];
+        	$orderData['order_product_quantity'][] = $product['quantity'];
+        }
 
 		$utagdata = array_merge( $utagdata, $orderData );
 	}
-
+	
+	// If single product page
+	if ( is_product() ) {
+		$productMeta = wc_get_product( get_the_ID() );
+		$utagdata['product_id'] = $productMeta->get_id();
+		$utagdata['product_sku'] = $productMeta->get_sku();
+		$utagdata['product_name'] = $productMeta->get_title();
+		$utagdata['product_regular_price'] = $productMeta->get_regular_price();
+		$utagdata['product_sale_price'] = $productMeta->get_sale_price();
+		$utagdata['product_price'] = $productMeta->get_price();
+		$utagdata['product_type'] = $productMeta->get_type();
+		$utagdata['product_stock_status'] = $productMeta->get_stock_status();
+		$utagdata['product_slug'] = $productMeta->get_slug();
+		$utagdata['product_category_id'] = $productMeta->get_category_ids();
+		
+		$categoryData = array();
+		foreach ($productMeta->get_category_ids() as $category) {
+			$term = get_term_by('id', $category, 'product_cat', 'ARRAY_A');
+			$categoryData[] = $term['slug'];
+		}
+		$utagdata['product_category_slug'] = $categoryData;
+	}
 
 	// Merge shop and cart details into utagdata
 	$utagdata = array_merge( $utagdata, $woocart );
