@@ -195,6 +195,7 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 = 2.1.13 =
 WooCommerce product data updates.
+Be aware that some data WooCommerce source/variable names have changed. Product data is now prefixed with product_, cart with cart_ and order with order_.
 
 = 2.1.12 =
 Add post ID to data layer.
