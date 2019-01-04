@@ -419,7 +419,7 @@ function tealiumEncodedDataObject( $return = false ) {
 		// Get custom namespace value if set
 		$tealiumNamespace = get_option( 'tealiumNamespace' , 'utag_data' );
 		$tealiumNamespace = ( empty( $tealiumNamespace ) ? 'utag_data' : $tealiumNamespace );
-		
+		$jsondata = str_replace("\u0000*\u0000", "", $jsondata);
 		$utag_data = "<script type=\"text/javascript\">\nvar {$tealiumNamespace} = {$jsondata};\n</script>\n";
 		if ( !$return ) {
 			echo $utag_data;
