@@ -3,7 +3,7 @@
 Plugin Name: Tealium
 Plugin URI: http://tealium.com
 Description: Adds the Tealium tag and creates a data layer for your WordPress site.
-Version: 2.1.13
+Version: 2.1.14
 Author: Ian Hampton - Tealium EMEA
 Author URI: http://tealium.com
 Text Domain: tealium
@@ -372,7 +372,17 @@ function tealiumDataObject() {
 			$utagdata['pageType'] = "search";
 			$utagdata['searchQuery'] = $searchQuery;
 			$utagdata['searchResults'] = $searchCount;
-		}
+	}
+	
+	// Get current user role or set as guest
+  	if( is_user_logged_in() ) {
+    	$user = wp_get_current_user();
+    	$role = ( array ) $user->roles;
+    	$utagdata['userRole'] = $role[0];
+  	}
+  	else {
+    	$utagdata['userRole'] = "guest";
+  	}
 
 	// Add shop data if WooCommerce is installed
 	if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
