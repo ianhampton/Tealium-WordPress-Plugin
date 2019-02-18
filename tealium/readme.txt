@@ -3,8 +3,8 @@ Contributors: tealium
 Tags: tag management, tag manager, tealium, data object, data layer, analytics
 Donate link: http://tealium.com
 Requires at least: 3.0.1
-Tested up to: 5.0
-Stable tag: 2.1.13
+Tested up to: 5.1
+Stable tag: 2.1.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -105,6 +105,9 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 == Changelog ==
 
+= 2.1.14 =
+* Added the role of the current WP user to the data layer. This will allow role-based load rules in TiQ.
+
 = 2.1.13 =
 * WooCommerce product data updates.
 
@@ -192,6 +195,9 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.1.14 =
+Added the role of the current WP user to the data layer. This will allow role-based load rules in TiQ.
 
 = 2.1.13 =
 WooCommerce product data updates.
