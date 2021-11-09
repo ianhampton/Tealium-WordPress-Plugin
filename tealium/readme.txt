@@ -3,8 +3,8 @@ Contributors: tealium
 Tags: tag management, tag manager, tealium, data object, data layer, analytics
 Donate link: http://tealium.com
 Requires at least: 3.0.1
-Tested up to: 5.8
-Stable tag: 2.1.14
+Tested up to: 5.8.1
+Stable tag: 2.1.15
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -107,6 +107,9 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 == Changelog ==
 
+= 2.1.15 =
+* Fixed a bug where the iQ tag was inserted into some sitemap plugins. Thanks to peytz.dk for providing the fix.
+
 = 2.1.14 =
 * Added the role of the current WP user to the data layer. This will allow role-based load rules in TiQ.
 
@@ -197,6 +200,9 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.1.15 =
+Fixed a bug where the iQ tag was inserted into some sitemap plugins. Thanks to peytz.dk for providing the fix.
 
 = 2.1.14 =
 Added the role of the current WP user to the data layer. This will allow role-based load rules in TiQ.

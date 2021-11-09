@@ -3,7 +3,7 @@
 Plugin Name: Tealium
 Plugin URI: http://tealium.com
 Description: Adds the Tealium tag and creates a data layer for your WordPress site.
-Version: 2.1.14
+Version: 2.1.15
 Author: Ian Hampton - Tealium EMEA
 Author URI: http://tealium.com
 Text Domain: tealium
@@ -693,6 +693,23 @@ function insertTealiumTag() {
 	}
 }
 
+/*
+ * Check if request look like a sitemap, or similar extensions where we wouldn't expect Tealium to load.
+ * @link https://github.com/Yoast/wordpress-seo/blob/b0762abb12cd7e519163de9a4ef9ba6cd016c84b/inc/sitemaps/class-sitemaps.php#L140-L149
+ * @return bool
+ */
+function isSitemap() {
+    if ( ! isset( $_SERVER['REQUEST_URI'] ) ) {
+        return false;
+    }
+    $request_uri = sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) );
+    $extension   = substr( $request_uri, -4 );
+    if ( stripos( $request_uri, 'sitemap' ) !== false && in_array( $extension, [ '.xml', '.xsl' ], true ) ) {
+        return true;
+    }
+    return false;
+}
+
 if ( is_admin() ) {
 	register_activation_hook( __FILE__, 'activate_tealium' );
 	register_deactivation_hook( __FILE__, 'deactive_tealium' );
@@ -701,7 +718,7 @@ if ( is_admin() ) {
 	add_action( 'admin_notices', 'admin_notices_tealium' );
 }
 else {
-	if ( !tealiumAMP() ) {
+	if ( !tealiumAMP() && !isSitemap() ) {
 		// Insert the Tealium tag
 		add_action( 'init', 'insertTealiumTag' );
 	}
