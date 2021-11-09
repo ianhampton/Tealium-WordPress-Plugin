@@ -3,7 +3,7 @@ Contributors: tealium
 Tags: tag management, tag manager, tealium, data object, data layer, analytics
 Donate link: http://tealium.com
 Requires at least: 3.0.1
-Tested up to: 5.1
+Tested up to: 5.8
 Stable tag: 2.1.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -27,6 +27,7 @@ A data layer is added to your WordPress website containing:
 * All post meta data, including custom fields
 * Search terms
 * Number of search results
+* Current user role
 
 
 = About Tealium =
@@ -66,6 +67,7 @@ Optional steps:
 * All post meta data, including custom fields
 * Search terms
 * Number of search results
+* Current user role
 
 = What are the Tealium tag location options? =
 
