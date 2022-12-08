@@ -21,7 +21,7 @@ function tealiumFormatAsName( $key ) {
 	$key = ucwords( trim( str_replace( '_', ' ', $key ) ) );
 
 	// Handle camelCase
-	$key = join( preg_split( '/(^[^A-Z]+|[A-Z][^A-Z]+)/', $key, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE ), ' ');
+	$key = implode( ' ', preg_split( '/(^[^A-Z]+|[A-Z][^A-Z]+)/', $key, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE ));
 
 	// Remove multiple spaces etc.
 	$key = preg_replace( '/(\s\s+|\t|\n)/', ' ', $key );

@@ -3,8 +3,8 @@
 Plugin Name: Tealium
 Plugin URI: http://tealium.com
 Description: Adds the Tealium tag and creates a data layer for your WordPress site.
-Version: 2.1.15
-Author: Ian Hampton - Tealium EMEA
+Version: 2.1.16
+Author: Ian Hampton
 Author URI: http://tealium.com
 Text Domain: tealium
 Domain Path: /languages
@@ -378,7 +378,7 @@ function tealiumDataObject() {
   	if( is_user_logged_in() ) {
     	$user = wp_get_current_user();
     	$role = ( array ) $user->roles;
-    	$utagdata['userRole'] = $role[0];
+    	$utagdata['userRole'] = $role[array_key_first($role)];
   	}
   	else {
     	$utagdata['userRole'] = "guest";

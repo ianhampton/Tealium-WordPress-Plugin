@@ -3,8 +3,8 @@ Contributors: tealium
 Tags: tag management, tag manager, tealium, data object, data layer, analytics
 Donate link: http://tealium.com
 Requires at least: 3.0.1
-Tested up to: 5.8.1
-Stable tag: 2.1.15
+Tested up to: 6.1.1
+Stable tag: 2.1.16
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -107,6 +107,10 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 == Changelog ==
 
+= 2.1.16 =
+* Bugfix - Outdated use of join() on admin page impacting PHP 8 users.
+* Bugfix - Corrected issue where user roles were assumed to begin at 0.
+
 = 2.1.15 =
 * Fixed a bug where the iQ tag was inserted into some sitemap plugins. Thanks to peytz.dk for providing the fix.
 
@@ -200,6 +204,10 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.1.16 =
+Bugfix - Outdated use of join() on admin page impacting PHP 8 users.
+Bugfix - Corrected issue where user roles were assumed to begin at 0.
 
 = 2.1.15 =
 Fixed a bug where the iQ tag was inserted into some sitemap plugins. Thanks to peytz.dk for providing the fix.
