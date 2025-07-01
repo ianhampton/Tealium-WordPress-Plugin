@@ -1,10 +1,10 @@
-=== Plugin Name ===
+=== Tealium ===
 Contributors: tealium
-Tags: tag management, tag manager, tealium, data object, data layer, analytics
+Tags: tag management, tag manager, tealium, data object, data layer
 Donate link: http://tealium.com
 Requires at least: 3.0.1
-Tested up to: 6.1.1
-Stable tag: 2.1.16
+Tested up to: 6.8.1
+Stable tag: 2.1.18
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -107,6 +107,13 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 
 == Changelog ==
 
+= 2.1.18 =
+* Added input sanitization to tag config fields provided through the admin console.
+* The 'Advanced Tag Code' feature is now disabled if 'DISALLOW_FILE_EDIT' is turned on within wp-config. Please check if this combination of settings applies before upgrading.
+
+= 2.1.17 =
+* Bugfix - Bugfix for PHP 8.2 - provided by @anjoalre.
+
 = 2.1.16 =
 * Bugfix - Outdated use of join() on admin page impacting PHP 8 users.
 * Bugfix - Corrected issue where user roles were assumed to begin at 0.
@@ -204,6 +211,14 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.1.18 =
+Added input sanitization to tag config fields provided through the admin console.
+The 'Advanced Tag Code' feature is now disabled if 'DISALLOW_FILE_EDIT' is turned on within wp-config. 
+**Important** - Please check if this combination of settings applies before upgrading.
+
+= 2.1.17 =
+Bugfix - Bugfix for PHP 8.2 - provided by @anjoalre.
 
 = 2.1.16 =
 Bugfix - Outdated use of join() on admin page impacting PHP 8 users.

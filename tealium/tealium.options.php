@@ -243,11 +243,18 @@ function tealiumGenerateBulkDataSourceList() {
 					</td>
 				</tr>
 			</table>
-
 			<h3 class="advanced"><label for="tealiumTagCode"><?php _e( 'Advanced Tag Code', 'tealium' ); ?></label></h3>
-			<p class="description"><?php _e( 'Optional: Tealium tag code pasted below will be used instead of any account/profile/environment values entered under Basic Settings.', 'tealium' ); ?></p>
-			<textarea name="tealiumTagCode" id="tealiumTagCode" rows="10" cols="100"><?php echo get_option( 'tealiumTagCode' ); ?></textarea>
-
+			<?php 
+			if (DISALLOW_FILE_EDIT === true) {
+				echo "This feature is not available because DISALLOW_FILE_EDIT is enabled in your Wordpress config settings.";
+			}
+			else {
+				?>
+				<p class="description"><?php _e( 'Optional: Tealium tag code pasted below will be used instead of any account/profile/environment values entered under Basic Settings.', 'tealium' ); ?></p>
+				<textarea name="tealiumTagCode" id="tealiumTagCode" rows="10" cols="100"><?php echo get_option( 'tealiumTagCode' ); ?></textarea>
+				<?php
+			}
+			?>
 			<input type="hidden" name="action" value="update" />
 
 			<p class="submit"><input type="submit" class="button-primary" value="<?php _e( 'Save Changes', 'tealium' ); ?>" /></p>

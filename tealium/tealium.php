@@ -3,7 +3,7 @@
 Plugin Name: Tealium
 Plugin URI: http://tealium.com
 Description: Adds the Tealium tag and creates a data layer for your WordPress site.
-Version: 2.1.16
+Version: 2.1.18
 Author: Ian Hampton
 Author URI: http://tealium.com
 Text Domain: tealium
@@ -97,10 +97,12 @@ add_action( 'plugins_loaded', 'load_plugin_textdomain_tealium' );
 function admin_notices_tealium() {
 	global $pagenow;
 	$currentScreen = get_current_screen();
-	$tealiumTagCode = get_option( 'tealiumTagCode' );
-	$tealiumAccount = get_option( 'tealiumAccount' );
-	$tealiumProfile = get_option( 'tealiumProfile' );
-	$tealiumEnvironment = get_option( 'tealiumEnvironment' );
+	if (DISALLOW_FILE_EDIT !== true) {
+		$tealiumTagCode = get_option( 'tealiumTagCode' );
+	}
+	$tealiumAccount = sanitize_text_field( get_option( 'tealiumAccount' ) );
+	$tealiumProfile = sanitize_text_field( get_option( 'tealiumProfile' ) );
+	$tealiumEnvironment = sanitize_text_field( get_option( 'tealiumEnvironment' ) );
 
 	// Add an admin message when looking at the plugins page if the Tealium tag is not found
 	if ( $pagenow == 'plugins.php' ) {
@@ -149,7 +151,7 @@ function admin_notices_tealium() {
  * Removes exclusions listed in admin setting
  */
 function tealiumRemoveExclusions( $utagdata ) {
-	$exclusions = get_option( 'tealiumExclusions' );
+	$exclusions = sanitize_text_field( get_option( 'tealiumExclusions' ) );
 	if ( !empty( $exclusions ) ) {
 
 		// Convert list to array and trim whitespace
@@ -171,6 +173,7 @@ add_filter( 'tealium_removeExclusions', 'tealiumRemoveExclusions' );
  * Convert camel case to underscores
  */
 function tealiumConvertCamelCase( $utagdata, $arrayHolder = array() ) {
+	$arrayHolder = is_array($arrayHolder) ? $arrayHolder : array();
 	$underscoreArray = !empty( $arrayHolder ) ? $arrayHolder : array();
 	foreach ( $utagdata as $key => $val ) {
 		$newKey = preg_replace( '/[A-Z]/', '_$0', $key );
@@ -427,7 +430,7 @@ function tealiumEncodedDataObject( $return = false ) {
 	if ( json_decode( str_replace("\u0000*\u0000", "", $jsondata) ) !== null ) {
 		
 		// Get custom namespace value if set
-		$tealiumNamespace = get_option( 'tealiumNamespace' , 'utag_data' );
+		$tealiumNamespace = sanitize_text_field( get_option( 'tealiumNamespace' , 'utag_data' ) );
 		$tealiumNamespace = ( empty( $tealiumNamespace ) ? 'utag_data' : $tealiumNamespace );
 		$jsondata = str_replace("\u0000*\u0000", "", $jsondata);
 		$utag_data = "<script type=\"text/javascript\">\nvar {$tealiumNamespace} = {$jsondata};\n</script>\n";
@@ -504,10 +507,12 @@ function tealiumPrettyPrintJSON( $json ) {
  */
 function getTealiumTagCode() {
 	global $tealiumtag;
-	$tealiumAdvanced = get_option( 'tealiumTagCode' );
-	$tealiumAccount = get_option( 'tealiumAccount' );
-	$tealiumProfile = get_option( 'tealiumProfile' );
-	$tealiumEnvironment = get_option( 'tealiumEnvironment' );
+	if (DISALLOW_FILE_EDIT !== true) {
+		$tealiumAdvanced = get_option( 'tealiumTagCode' );
+	}
+	$tealiumAccount = sanitize_text_field( get_option( 'tealiumAccount' ) );
+	$tealiumProfile = sanitize_text_field( get_option( 'tealiumProfile' ) );
+	$tealiumEnvironment = sanitize_text_field( get_option( 'tealiumEnvironment' ) );
 	$tealiumTagType = get_option( 'tealiumTagType' );
 	$tealiumCacheBuster = get_option( 'tealiumCacheBuster' );
 	$cacheBuster = "";
@@ -558,9 +563,9 @@ function outputTealiumTagCode() {
  * Generate utag.sync.js tag
  */
 function tealiumOutputUtagSync() {
-	$tealiumAccount = get_option( 'tealiumAccount' );
-	$tealiumProfile = get_option( 'tealiumProfile' );
-	$tealiumEnvironment = get_option( 'tealiumEnvironment' );
+	$tealiumAccount = sanitize_text_field( get_option( 'tealiumAccount' ) );
+	$tealiumProfile = sanitize_text_field( get_option( 'tealiumProfile' ) );
+	$tealiumEnvironment = sanitize_text_field( get_option( 'tealiumEnvironment' ) );
 	$tealiumCacheBuster = get_option( 'tealiumCacheBuster' );
 	$cacheBuster = "";
 	$utagSync = "";
