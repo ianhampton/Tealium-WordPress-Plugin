@@ -114,21 +114,21 @@ function tealiumGenerateBulkDataSourceList() {
 				<tr>
 					<th scope="row"><label for="tealiumAccount"><?php _e( 'Account', 'tealium' ); ?></label></th>
 					<td>
-						<input name='tealiumAccount' id='tealiumAccount' size='30' type='text' value='<?php echo get_option( 'tealiumAccount' ); ?>' class='regular-text' />
+						<input name='tealiumAccount' id='tealiumAccount' size='30' type='text' value='<?php echo esc_attr( get_option( 'tealiumAccount' ) ); ?>' class='regular-text' />
 						<p class="description"><?php _e( 'For example: <code>companyname</code>', 'tealium' ); ?></p>
 					</td>
 				</tr>
 				<tr>
 					<th scope="row"><label for="tealiumProfile"><?php _e( 'Profile', 'tealium' ); ?></label></th>
 					<td>
-						<input name='tealiumProfile' id='tealiumProfile' size='30' type='text' value='<?php echo get_option( 'tealiumProfile' ); ?>' class='regular-text' />
+						<input name='tealiumProfile' id='tealiumProfile' size='30' type='text' value='<?php echo esc_attr( get_option( 'tealiumProfile' ) ); ?>' class='regular-text' />
 						<p class="description"><?php _e( 'For example: <code>main</code>', 'tealium' ); ?></p>
 					</td>
 				</tr>
 				<tr>
 					<th scope="row"><label for="tealiumEnvironment"><?php _e( 'Environment', 'tealium' ); ?></label></th>
 					<td>
-						<input name='tealiumEnvironment' id='tealiumEnvironment' size='30' type='text' value='<?php echo get_option( 'tealiumEnvironment' ); ?>' class='regular-text' />
+						<input name='tealiumEnvironment' id='tealiumEnvironment' size='30' type='text' value='<?php echo esc_attr( get_option( 'tealiumEnvironment' ) ); ?>' class='regular-text' />
 						<p class="description"><?php _e( 'For example: <code>prod</code>', 'tealium' ); ?></p>
 					</td>
 				</tr>

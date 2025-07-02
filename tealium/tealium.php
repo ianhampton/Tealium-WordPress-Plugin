@@ -3,7 +3,7 @@
 Plugin Name: Tealium
 Plugin URI: http://tealium.com
 Description: Adds the Tealium tag and creates a data layer for your WordPress site.
-Version: 2.1.18
+Version: 2.1.21
 Author: Ian Hampton
 Author URI: http://tealium.com
 Text Domain: tealium
@@ -97,12 +97,10 @@ add_action( 'plugins_loaded', 'load_plugin_textdomain_tealium' );
 function admin_notices_tealium() {
 	global $pagenow;
 	$currentScreen = get_current_screen();
-	if (DISALLOW_FILE_EDIT !== true) {
-		$tealiumTagCode = get_option( 'tealiumTagCode' );
-	}
-	$tealiumAccount = sanitize_text_field( get_option( 'tealiumAccount' ) );
-	$tealiumProfile = sanitize_text_field( get_option( 'tealiumProfile' ) );
-	$tealiumEnvironment = sanitize_text_field( get_option( 'tealiumEnvironment' ) );
+	$tealiumTagCode = get_option( 'tealiumTagCode' );
+	$tealiumAccount = esc_attr( get_option( 'tealiumAccount' ) );
+	$tealiumProfile = esc_attr( get_option( 'tealiumProfile' ) );
+	$tealiumEnvironment = esc_attr( get_option( 'tealiumEnvironment' ) );
 
 	// Add an admin message when looking at the plugins page if the Tealium tag is not found
 	if ( $pagenow == 'plugins.php' ) {
@@ -151,7 +149,7 @@ function admin_notices_tealium() {
  * Removes exclusions listed in admin setting
  */
 function tealiumRemoveExclusions( $utagdata ) {
-	$exclusions = sanitize_text_field( get_option( 'tealiumExclusions' ) );
+	$exclusions = esc_attr( get_option( 'tealiumExclusions' ) );
 	if ( !empty( $exclusions ) ) {
 
 		// Convert list to array and trim whitespace
@@ -430,7 +428,7 @@ function tealiumEncodedDataObject( $return = false ) {
 	if ( json_decode( str_replace("\u0000*\u0000", "", $jsondata) ) !== null ) {
 		
 		// Get custom namespace value if set
-		$tealiumNamespace = sanitize_text_field( get_option( 'tealiumNamespace' , 'utag_data' ) );
+		$tealiumNamespace = esc_attr( get_option( 'tealiumNamespace' , 'utag_data' ) );
 		$tealiumNamespace = ( empty( $tealiumNamespace ) ? 'utag_data' : $tealiumNamespace );
 		$jsondata = str_replace("\u0000*\u0000", "", $jsondata);
 		$utag_data = "<script type=\"text/javascript\">\nvar {$tealiumNamespace} = {$jsondata};\n</script>\n";
@@ -507,12 +505,10 @@ function tealiumPrettyPrintJSON( $json ) {
  */
 function getTealiumTagCode() {
 	global $tealiumtag;
-	if (DISALLOW_FILE_EDIT !== true) {
-		$tealiumAdvanced = get_option( 'tealiumTagCode' );
-	}
-	$tealiumAccount = sanitize_text_field( get_option( 'tealiumAccount' ) );
-	$tealiumProfile = sanitize_text_field( get_option( 'tealiumProfile' ) );
-	$tealiumEnvironment = sanitize_text_field( get_option( 'tealiumEnvironment' ) );
+	$tealiumAdvanced = get_option( 'tealiumTagCode' );
+	$tealiumAccount = esc_attr( get_option( 'tealiumAccount' ) );
+	$tealiumProfile = esc_attr( get_option( 'tealiumProfile' ) );
+	$tealiumEnvironment = esc_attr( get_option( 'tealiumEnvironment' ) );
 	$tealiumTagType = get_option( 'tealiumTagType' );
 	$tealiumCacheBuster = get_option( 'tealiumCacheBuster' );
 	$cacheBuster = "";
@@ -563,9 +559,9 @@ function outputTealiumTagCode() {
  * Generate utag.sync.js tag
  */
 function tealiumOutputUtagSync() {
-	$tealiumAccount = sanitize_text_field( get_option( 'tealiumAccount' ) );
-	$tealiumProfile = sanitize_text_field( get_option( 'tealiumProfile' ) );
-	$tealiumEnvironment = sanitize_text_field( get_option( 'tealiumEnvironment' ) );
+	$tealiumAccount = esc_attr( get_option( 'tealiumAccount' ) );
+	$tealiumProfile = esc_attr( get_option( 'tealiumProfile' ) );
+	$tealiumEnvironment = esc_attr( get_option( 'tealiumEnvironment' ) );
 	$tealiumCacheBuster = get_option( 'tealiumCacheBuster' );
 	$cacheBuster = "";
 	$utagSync = "";
@@ -707,7 +703,7 @@ function isSitemap() {
     if ( ! isset( $_SERVER['REQUEST_URI'] ) ) {
         return false;
     }
-    $request_uri = sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) );
+    $request_uri = esc_attr( wp_unslash( $_SERVER['REQUEST_URI'] ) );
     $extension   = substr( $request_uri, -4 );
     if ( stripos( $request_uri, 'sitemap' ) !== false && in_array( $extension, [ '.xml', '.xsl' ], true ) ) {
         return true;

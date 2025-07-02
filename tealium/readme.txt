@@ -4,7 +4,7 @@ Tags: tag management, tag manager, tealium, data object, data layer
 Donate link: http://tealium.com
 Requires at least: 3.0.1
 Tested up to: 6.8.1
-Stable tag: 2.1.18
+Stable tag: 2.1.21
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -94,6 +94,10 @@ This can be achieved by conditionally modifying the Tealium tag code by calling 
 
 For more information see the [action examples on GitHub](https://github.com/ianhampton/Tealium-WordPress-Plugin#action-examples).
 
+= How can I report security bugs? =
+
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team helps validate, triage and handle any security vulnerabilities. [Report a security vulnerability.]( https://patchstack.com/database/vdp/778de173-17b9-47dd-b01c-e9bacd7ce869 )
+
 == Screenshots ==
 
 1. The Tealium plugin allows your Tealium tag to be added straight to your site from your WordPress dashboard.
@@ -106,6 +110,15 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 8. The bulk export feature allows you to quickly import your WordPress variables into Tealium.
 
 == Changelog ==
+
+= 2.1.21 =
+* Alter sanitization method following feedback from Patchstack
+
+= 2.1.20 =
+* Alter sanitization method following feedback from Patchstack
+
+= 2.1.19 =
+* PHP 8 bugfix
 
 = 2.1.18 =
 * Added input sanitization to tag config fields provided through the admin console.
@@ -211,6 +224,15 @@ For more information see the [action examples on GitHub](https://github.com/ianh
 * Initial release.
 
 == Upgrade Notice ==
+
+= 2.1.21 =
+Alter sanitization method following feedback from Patchstack
+
+= 2.1.20 =
+Alter sanitization method following feedback from Patchstack
+
+= 2.1.19 =
+PHP8 Bugfix
 
 = 2.1.18 =
 Added input sanitization to tag config fields provided through the admin console.
